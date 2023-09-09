@@ -1,0 +1,22 @@
+{% extends "AppProyecto/padre.html" %}
+
+{% load static %}
+
+{% block titulo %} Busqueda de Clientes Veterinaria Austral {% endblock %}
+
+{% block contenido_que_cambia %}
+
+{% if clientes %}
+
+    <h1>RESULTADO BUSQUEDA</h1>
+    {% for cliente in clientes %}
+
+        <h3>{{ cliente.dni }} - {{ cliente.nombre }} </h3>
+        {% endfor %}
+
+{% else %}
+    <h1>NO SE ENCONTRARON RESULTADOS</h1>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "AppProyecto/padre.html" %}
+
+{% load static %}
+
+{% block titulo %} Ingreso Paciente Felino a Plataforma {% endblock %}
+
+{% block contenido_que_cambia %}
+
+<h2>Ingreso Mascotas del tipo Felino</h2>
+<h4>Ingrese datos Solicitados</h4>
+
+<form action="{% url 'gatos' %}" method="post"> {% csrf_token %}
+    <table>
+        {{ formulario.as_table }}
+    </table>
+    <input type="submit" value="Agregar Paciente">
+</form>
+
+<h3>{{ mensaje }}</h3>
+
+{% endblock %}
