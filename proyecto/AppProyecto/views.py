@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from .models import Gatos, Perros, Fecha_Ingreso, Clientes
 from django.http import HttpResponse
+from django.urls import reverse_lazy
 from .forms import PerrosForm, GatosForm, Fecha_IngresoForm, ClienteForm
 
 # Create your views here.

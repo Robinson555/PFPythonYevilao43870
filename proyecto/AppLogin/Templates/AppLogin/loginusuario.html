@@ -1,0 +1,19 @@
+{% extends "AppComunidad/padrecomunidad.html" %}
+
+{% load static %}
+
+{% block titulo %} Ingreso de Credenciales {% endblock %}
+
+{% block contenido_comunidad %}
+    <form action="{% url 'loginusuario' %}" method="POST">{% csrf_token %}
+        <table>
+            {{ form.as_p }}
+        </table>
+        
+        <button type="Iniciar"> Iniciar Sesión </button>
+        {% if form.errors %}
+            <p class="error">Datos incorrectos</p>
+        {% endif %}
+    </form>
+
+{% endblock %}
