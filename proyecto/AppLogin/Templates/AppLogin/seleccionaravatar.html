@@ -1,0 +1,29 @@
+{% extends "AppLogin/padrelogin.html" %}
+
+{% load static %}
+
+{% block titulo %} Plataforma Usuarios {% endblock %}
+
+{% block contenido_comunidad %}
+
+    <h3> {{ mensaje }} </h3>
+
+    <div class="post-main-div">
+
+        <form action="{% url 'seleccionaravatar' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+        
+            {{form.as_p}}
+              <div>
+                <input class="form-button btn btn-primary" type="submit" value="Confirmar Avatar">
+              </div>
+            {% if message %}
+            <p>{{message}}</p>
+        {% endif %}
+        </form>
+        
+        
+            
+        
+        </div>
+    
+{% endblock %}

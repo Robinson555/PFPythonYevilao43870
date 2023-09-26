@@ -1,0 +1,30 @@
+{% extends "AppComunidad/padrecomunidad.html" %}
+
+{% load static %}
+
+{% block titulo %} Contenido Publicado {% endblock %}
+
+{% block contenido_comunidad %}
+
+    <h1>Contenido de la Comunidad</h1>
+
+    <ul>
+        {% for comunidad in comunidad %}
+        <li>
+            <strong> {{ contenido.titulo}} </strong>
+            {{ tema.descripcion }}
+            <img src="{{ comunidad.imagen }}" alt="{{ comunidad.titulo }}" width="120px">
+            <br>
+            <a href="{% url 'editarblog' contenido.id %}" class="btn btn-Warning"> Editar Blog </a>
+            <a href="{% url 'eliminarblog' contenido.id %}" class="btn btn-Danger"> Eliminar Blog </a>
+
+        </li>
+        {% empty %}
+            <p>No hay blog </p>
+        {% endfor %}
+
+        <a href="{% url 'foro' %}" class="btn btn-Sucess">Crear plublicación</a>
+
+    </ul>
+
+{% endblock %}

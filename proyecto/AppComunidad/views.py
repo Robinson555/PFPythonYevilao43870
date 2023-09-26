@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from .forms import crearBlogform
+from .forms import crearBlogForm
 from .models import Comunidad
 
 # Create your views here.
@@ -18,16 +18,15 @@ def contenido(request):
 @login_required
 def crear_seccion(request):
     if request.method == "POST":
-        form=crearBlogform(request.POST, request.FILES)
+        form = crearBlogForm(request.POST, request.FILES)
         if form.is_valid():
-            seccion=form.save(commit=False)
-            seccion.creador=request.User
+            seccion = form.save(commit=False)
+            seccion.autor = request.user 
             seccion.save()
-            return redirect('inicioComunidad')
-
+            return redirect('AppComunidad/homecomunidad')
     else:
-        form=crearBlogform()
-    return render(request, "crearblog.html", {'form':form})
+        form = crearBlogForm()
+    return render(request, "AppComunidad/crearblog.html", {'form': form})
 
 @login_required
 def editar_seccion(request, comunidad_id):
@@ -36,17 +35,17 @@ def editar_seccion(request, comunidad_id):
         form=crearBlogform(request.POST, request.FILES, instance=comunidad)
         if form.is_valid():
             form.save()
-            return redirect('contenido')
+            return redirect('AppComunidad/contenido')
     else:
         form=crearBlogform(instance=comunidad)
 
-    return render(request, "editarblog.html", {'form':form, 'comunidad':comunidad})
+    return render(request, "AppComunidad/editarblog.html", {'form':form, 'comunidad':comunidad})
 
-@login_required
+
 def eliminar_seccion(request, comunidad_id):
     comunidad = get_object_or_404(Comunidad, id=comunidad_id)
     if request.method == "POST":
         comunidad.delete()
-        return redirect('contenido')
+        return redirect('AppComunidad/contenido')
 
-    return render(request, "eliminarblog.html", {'form':form, 'comunidad':comunidad})
+    return render(request, "AppComunidad/eliminarblog.html", {'form':form, 'comunidad':comunidad})

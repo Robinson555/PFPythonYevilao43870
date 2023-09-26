@@ -1,7 +1,7 @@
 from django import forms
 from .models import Comunidad
 
-class crearBlogform(forms.ModelForm):
+class crearBlogForm(forms.ModelForm):
     class Meta:
         model=Comunidad
         fields=['titulo','imagen','contenido']

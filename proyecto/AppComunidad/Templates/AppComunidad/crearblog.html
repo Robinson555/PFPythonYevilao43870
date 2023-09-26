@@ -4,16 +4,21 @@
 
 {% block titulo %} Agregar una plublicación al Blog {% endblock %}
 
+{% block contenido_comunidad %}
+
 <h1> En esta sección podras agregar una plublicación para comenzar a interactuar con la comunidad.</h1>
 
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_table }}
-    <input type="submit" value="Publicar">
+<form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+
+    {{ form.as_p }}
+
+    <input class="form-button btn btn-success" type="submit" value="Publicar">
+
 </form>
+
 <div class="contenidoJ">
     {% url 'contenido' as url %}
-    <button type="button" oneclick="windows.location.href='{{ url }}'">Volver atras</button>
+    <button class="form-button btn btn-warning" type="button" oneclick='windows.location.href=' {% url "crearblog" %} ' >Volver atras</button>
 </div>
 
 {% endblock %}

@@ -23,7 +23,8 @@ from AppLogin.views import *
 from AppComunidad.views import *
 
 urlpatterns = [
-    path('', inicioComunidad, name="inicio"),
+    path("admin/", admin.site.urls),
+    path('', loginUsuario, name="loginUsuario"),
     path('AppProyecto/', include("AppProyecto.urls")),
     path('AppComunidad/', include("AppComunidad.urls")),
     path('AppLogin/', include("AppLogin.urls")),

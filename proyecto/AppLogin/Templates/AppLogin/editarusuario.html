@@ -1,0 +1,21 @@
+{% extends "AppComunidad/padrecomunidad.html" %}
+
+{% load static %}
+
+{% block titulo %} Ingreso de Credenciales {% endblock %}
+
+{% block contenido_comunidad %}
+
+    <form action="{% url 'editarusuario' %}" method="POST"> {% csrf_token %}
+        
+        <table>
+
+            {{ form.as_table }}
+
+        </table>
+        
+        <input type="submit" value="Guardar">
+
+    </form>
+
+{% endblock %}
