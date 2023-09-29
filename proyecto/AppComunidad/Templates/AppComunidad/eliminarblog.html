@@ -1,21 +1,18 @@
 {% extends "AppComunidad/padrecomunidad.html" %}
-
 {% load static %}
 
-{% block titulo %} Editar Blog {% endblock %}
-
+{% block titulo %} Eliminar Blog {% endblock %}
 
 {% block contenido_comunidad %}
+  <h2>¿Estás seguro de que deseas eliminar esta publicación?</h2>
+  <p>Título: {{ comunidad.titulo }}</p>
+  <p>Contenido: {{ comunidad.contenido }}</p>
+  <p>Imagen:</p>
 
-    <form method="POST"> {% csrf_token %}
-        {{ form.as_table }}
+  <form method="POST">
+    {% csrf_token %}
+    <button class="btn btn-danger" type="submit" name="eliminar">Eliminar</button>
+  </form>
 
-        <input type="submit" value="ActualizarCambio">
-    </form>
-        <div class="contenido">
-            {% url 'contenido' %}
-            <button type="button" oneclick="windows.location.href='{{ url }}' "> Volver</button>
-        
-        </div>
-
+  <a href="{% url 'contenido' %}" class="btn btn-secondary">Cancelar</a>
 {% endblock %}

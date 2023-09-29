@@ -8,7 +8,7 @@ class Comunidad(models.Model):
     contenido=models.TextField()
     imagen=models.ImageField()
     fecha_creacion=models.DateField(auto_now=True)
-    precio = models.CharField(max_length=8)
+    precio = models.CharField(max_length=10)
     autor=models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.autor} - { self.titulo}"
@@ -22,5 +22,3 @@ class PreguntasCom(models.Model):
     autor=models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.autor} - { self.titulo}"
-
-

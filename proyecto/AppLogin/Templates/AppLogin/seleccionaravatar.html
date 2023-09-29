@@ -1,4 +1,4 @@
-{% extends "AppLogin/padrelogin.html" %}
+{% extends "AppComunidad/padrecomunidad.html" %}
 
 {% load static %}
 
@@ -12,18 +12,15 @@
 
         <form action="{% url 'seleccionaravatar' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
         
-            {{form.as_p}}
+            {{ form.as_p }}
               <div>
                 <input class="form-button btn btn-primary" type="submit" value="Confirmar Avatar">
               </div>
-            {% if message %}
-            <p>{{message}}</p>
-        {% endif %}
+            {% if mensaje %}
+            <p>{{ mensaje }}</p>
+            {% endif %}
         </form>
         
-        
-            
-        
-        </div>
-    
+    </div>
+
 {% endblock %}

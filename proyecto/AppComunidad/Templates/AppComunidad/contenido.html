@@ -1,30 +1,26 @@
 {% extends "AppComunidad/padrecomunidad.html" %}
-
 {% load static %}
 
 {% block titulo %} Contenido Publicado {% endblock %}
 
 {% block contenido_comunidad %}
 
-    <h1>Contenido de la Comunidad</h1>
+<h1>Contenido de la Comunidad</h1>
 
-    <ul>
-        {% for comunidad in comunidad %}
-        <li>
-            <strong> {{ contenido.titulo}} </strong>
-            {{ tema.descripcion }}
-            <img src="{{ comunidad.imagen }}" alt="{{ comunidad.titulo }}" width="120px">
-            <br>
-            <a href="{% url 'editarblog' contenido.id %}" class="btn btn-Warning"> Editar Blog </a>
-            <a href="{% url 'eliminarblog' contenido.id %}" class="btn btn-Danger"> Eliminar Blog </a>
+<ul>
+    {% for publicacion in publicaciones %}
+    <li>
+        <strong>{{ publicacion.titulo }}</strong><br>
+        {{ publicacion.contenido }}<br>
+        <img src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" width="120px"><br>
+        <a href="{% url 'editar_seccion' publicacion.id %}" class="btn btn-warning">Editar Blog</a>
+        <a href="{% url 'eliminar_seccion' publicacion.id %}" class="btn btn-danger">Eliminar Blog</a>
+    </li>
+    {% empty %}
+    <p>No hay publicaciones</p>
+    {% endfor %}
+</ul>
 
-        </li>
-        {% empty %}
-            <p>No hay blog </p>
-        {% endfor %}
-
-        <a href="{% url 'crearblog' %}" class="btn btn-Sucess">Crear plublicación</a>
-
-    </ul>
+<a href="{% url 'crearblog' %}" class="btn btn-success">Crear publicación</a>
 
 {% endblock %}

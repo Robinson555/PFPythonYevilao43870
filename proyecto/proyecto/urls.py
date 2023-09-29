@@ -19,16 +19,19 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 from AppProyecto.views import *
-from AppLogin.views import *
+from AppLogin.views import loginUsuario
 from AppComunidad.views import *
+from django.conf import settings
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('', loginUsuario, name="loginUsuario"),
+    path('', loginUsuario, name="loginusuario"),
     path('AppProyecto/', include("AppProyecto.urls")),
     path('AppComunidad/', include("AppComunidad.urls")),
     path('AppLogin/', include("AppLogin.urls")),
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

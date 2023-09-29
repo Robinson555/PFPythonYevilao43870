@@ -11,18 +11,21 @@ class RegistroUsuarioForm(UserCreationForm):
         fields = ['username','email','password1','password2']
         help_texts = {campo:"" for campo in fields}
 
+    imagen = forms.ImageField(label="Imagen de Perfil", required=False)
+
 
 class UserEditForm(UserCreationForm):
-    
+    nombre = forms.CharField(label="Modificar Nombre")
+    apellido = forms.CharField(label="Modificar Apellido")
     email = forms.EmailField(label="Email")
     password1=forms.CharField(label="Contraseña", widget=forms.PasswordInput)
     password2=forms.CharField(label="Vuelve a ingresar la contraseña", widget=forms.PasswordInput)
-    ingrese_nombre= forms.CharField(label="Modificar Nombre")
-    ingrese_apellido= forms.CharField(label="Modificar Apellido")
 
     class Meta:
         model=User
-        fields=['email','password1','password2','ingrese_nombre','ingrese_apellido']
+        fields=['nombre','apellido','email','password1','password2']
+
+    imagen = forms.ImageField(label="Imagen de Perfil", required=False)
 
 class AvatarForm(forms.Form):
     imagen=forms.ImageField(label="Imagen")

@@ -3,9 +3,9 @@ from .views import *
 
 urlpatterns = [
         path('homecomunidad/', inicioComunidad, name="inicioComunidad"),
-        path('abaoutme/', abaoutMe, name="abaoutme"),
+        path('aboutme/', aboutMe, name="aboutme"),
         path('contenido/', contenido, name="contenido"),
         path('crearblog/', crear_seccion, name="crearblog"),
-        path('editarblog/', editar_seccion, name="editar_seccion"),
-        path('eliminarblog/', eliminar_seccion, name="eliminar_seccion"),
+        path('editarblog/<int:comunidad_id>/', editar_seccion, name="editar_seccion"),
+        path('eliminarblog/<int:comunidad_id>/', eliminar_seccion, name="eliminar_seccion"),
 ]
