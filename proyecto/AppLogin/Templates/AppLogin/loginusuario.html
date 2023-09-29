@@ -17,13 +17,13 @@
                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                     <p class="text-white-50 mb-5">Ingresa tus Credenciales</p>
       
-                    <form action="{% url 'loginusuario' %}" method="POST"> {% csrf_token %}
+                    <form method="post" enctype="multipart/form-data" class="gradient-custom"> {% csrf_token %}
       
                       <div class="form-outline form-white mb-4">
                         {{ form.username.label_tag }}
                         {{ form.username }}
                         {{ form.username.errors }}
-                      </div>      
+                      </div>
                       <div class="form-outline form-white mb-4">
                         {{ form.password.label_tag }}
                         {{ form.password }}

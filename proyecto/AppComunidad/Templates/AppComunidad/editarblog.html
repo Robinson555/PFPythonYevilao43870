@@ -6,44 +6,16 @@
 
 
 {% block contenido_comunidad %}
-    <header>
-        <section class="vh-100 gradient-custom">
-            <div class="container py-5 h-100">
-                <div class="row d-flex justify-content-center align-items-center h-200">
-                    <div class="col-12 col-md-8 col-lg-6 col-xl-5.1">
-                        <div class="card bg-dark text-white" style="border-radius: 1rem;">
-                            <div class="card-body p-5 text-center">        
-                                <div class="mb-md-5 mt-md-4 pb-5 text-justify">        
-                                    <h2 class="fw-bold mb-2 text-uppercase text-center">Editar Publicación</h2>
-                                    <p class="text-white-50 mb-5 text-center">No olvide guardar los cambios realizados</p>
-                                
-                                    <form method="post" enctype="multipart/form-data" class="justify-content-center"> 
-                                        {% csrf_token %}
 
-                                    <div class="form-outline form-white mb-4">
-                                        {{ form.titulo.label_tag }}
-                                        {{ form.titulo }}
-                                    </div>
-                                    <div class="form-outline form-white mb-4">
-                                        {{ form.contenido.label_tag }}
-                                        {{ form.contenido }}
-                                    </div>
-                                    <div class="form-outline form-white mb-4">
-                                        {{ form.imagen.label_tag }}
-                                        <img src="{{ form.instance.imagen.url }}" id="imagen-preview" alt="Vista previa de la imagen" width="150px" />
-                                        {{ form.imagen }}
-                                        
-                                        <input type="submit" value="Actualizar Cambio">
-                                    </div>                                        
-                                    </form>
-                                <div>
-                                    <button type="button" href="{% url 'contenido' %}"> Volver</button>                                    
-                                </div> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </header>
+    <form method="POST"> {% csrf_token %}
+        {{ form.as_table }}
+
+        <input type="submit" value="ActualizarCambio">
+    </form>
+            <button type="button" href="{% url 'inicioComunidad' %}"> Volver</button>
+
+
+        
+
+
 {% endblock %}

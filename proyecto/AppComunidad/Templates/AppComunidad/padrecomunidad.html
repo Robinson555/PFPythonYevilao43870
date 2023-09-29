@@ -48,11 +48,12 @@
                         
                         <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-2 btn-dark rounded" > {{ user.username }} </a></li>
                         <img src="{{ avatar }}" alt="Avatar" style="width:50px;height:50px;">
+                        
                         <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-warning rounded" href="{% url 'editarusuario' %}"> Editar Perfil </a></li>
                         <style>
                             .rounded {
                                 border-radius: 2rem;
-                            }
+                            } 
                             </style>
                         {% else %}
                         <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-dark rounded" href="{% url 'loginusuario' %}"> Login </a></li>

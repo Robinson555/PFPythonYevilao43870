@@ -48,12 +48,15 @@
                                     {{ avatar_form.imagen }}
                                     {{ avatar_form.imagen.errors }}
                                 </div>
+                                <section>
+                                    <div class="justify-content">
+                                        <button class="btn btn-outline-light btn-lg px-5" type="submit">Registrarse</button>
+                                        <button class="btn btn-outline-light btn-lg px-5"> <a href="{% url 'loginusuario' %}" class="text-white-50 fw-bold">Cancelar</a></button>
+                                    </div>
+                                </section>
                             </form>
                         </div>
-                        <div class="justify-content">
-                            <button class="btn btn-outline-light btn-lg px-5" type="submit">Registrarse</button>
-                            <button class="btn btn-outline-light btn-lg px-5"> <a href="{% url 'loginusuario' %}" class="text-white-50 fw-bold">Cancelar</a></button>
-                        </div>
+
                         <div>
                             <p class="mb-0">¿Ya tienes una cuenta? <a href="{% url 'loginusuario' %}" class="text-white-50 fw-bold">Iniciar sesión</a></p>
                         </div>

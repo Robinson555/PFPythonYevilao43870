@@ -1,0 +1,15 @@
+{% extends 'AppComunidad/padrecomunidad.html' %}
+
+{% block content %}
+
+  <h1>Enviar mensaje a {{ receptor.username }}</h1>
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enviar</button>
+  </form>
+
+  <p><a href="{% url 'ver_mensajes' usuario_id=receptor.id %}">Volver al chat</a></p>
+
+{% endblock %}
