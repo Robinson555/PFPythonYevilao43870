@@ -25,25 +25,19 @@ def obtenerAvatar(request):
 
 
 def loginUsuario(request):
-    form = AuthenticationForm()
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
-            info = form.cleaned_data
-            usuario = info["username"]
-            contraseña = info["password"]
-            usuario = authenticate(username=usuario, password=contraseña)
-            if usuario is not None:
-                login(request, usuario)
-                avatar = obtenerAvatar(request)
-                success_message = messages.success(request, 'Usuario Logeado Correctamente!')
-                return render(request, "AppComunidad/homecomunidad.html", {"mensaje": f"{usuario} se ha creado sin problemas", "avatar": avatar})
-            else:
-                return render(request, "AppLogin/loginusuario.html", {"mensaje": "Datos Inválidos, reintente", "form": form})
+            usuario = form.get_user()
+            login(request, usuario)
+            messages.success(request, 'Usuario logeado correctamente.')
+            return redirect('inicioComunidad')
         else:
-            return render(request, "AppLogin/loginusuario.html", {"mensaje": "Opción inválida", "form": form})
+            messages.error(request, 'Credenciales inválidas. Por favor, reintente.')
     else:
-        return render(request, "AppLogin/loginusuario.html", {"form": form})
+        form = AuthenticationForm()
+
+    return render(request, "AppLogin/loginusuario.html", {"form": form})
 
     
 def registro(request):
