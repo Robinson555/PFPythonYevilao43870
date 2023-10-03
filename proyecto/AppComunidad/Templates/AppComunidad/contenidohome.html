@@ -1,0 +1,40 @@
+{% extends "AppComunidad/padrecomunidad.html" %}
+
+{% load static %}
+
+{% block titulo %} Contenido Publicado {% endblock %}
+
+{% block contenido_comunidad %}
+
+{% if messages %}
+<div class="alert alert-success">
+    <ul>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+<h1>Sección Foro Preguntas y Tips</h1>
+<h3> <a href="{% url 'crearblog' %}" class="btn btn-success"> Crear publicación de Comercio</a> </h3>
+
+<div class="row mt-5">
+    {% for publicacion in publicaciones %}
+    <div class="col-lg-6">
+        <!-- Blog post-->
+        <div class="card mb-4">
+            <a href="{% url 'contenido' comunidad_id=publicacion.id %}">
+                <img class="card-img-top" src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" />
+            </a>
+            <div class="card-body">
+                <div class="small text-muted">{{ publicacion.fecha_publicacion|date:"F d, Y" }}</div>
+                <h2 class="card-title h4">{{ publicacion.titulo }}</h2>
+                <p class="card-text">{{ publicacion.contenido|slice:":100" }}</p>
+                <a class="btn btn-primary" href="{% url 'contenido' comunidad_id=publicacion.id %}">Read more →</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

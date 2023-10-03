@@ -8,102 +8,220 @@ from django.contrib.auth.models import User
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from AppLogin.views import *
 from AppLogin.models import*
-from .forms import crearBlogForm, MensajeForm
-from .models import Comunidad
+from .forms import crearBlogForm, crearForoForm, comentarioForm, comentarioPregunta
+from .models import Comunidad, PreguntasCom, Comentario, ComentarioPregunta
 
 # Create your views here.
-
+@login_required
 def inicioComunidad(request):
     avatar= obtenerAvatar(request)
-    
-    return render(request,"AppComunidad/homecomunidad.html", {"avatar":obtenerAvatar(request)})
+    publicaciones = Comunidad.objects.all()
+    preguntas = PreguntasCom.objects.all()
+
+    return render(request,"AppComunidad/homecomunidad.html", {"publicaciones":publicaciones, "preguntas":preguntas, "avatar":obtenerAvatar(request)})
 
 @login_required
 def aboutMe(request):
     avatar= obtenerAvatar(request)
+
     return render(request, "AppComunidad/aboutme.html", {"avatar":obtenerAvatar(request)})
+    
+
+
+#Sección del Blog
 
 @login_required
-def contenido(request):
+def contenido(request, comunidad_id):
+    avatar=obtenerAvatar(request)
+    publicacion = get_object_or_404(Comunidad, id=comunidad_id)
+    comentarios = Comentario.objects.filter(publicacion=publicacion)
+    
+    es_autor = publicacion.autor == request.user
+    
+    if request.method == 'POST':
+        formulario = comentarioForm(request.POST)
+        if formulario.is_valid():
+            comentario = formulario.save(commit=False)
+            comentario.autor = request.user
+            comentario.publicacion = publicacion
+            
+            try:
+                avatar_usuario = Avatar.objects.get(user=request.user)
+                comentario.avatar = avatar_usuario.imagen
+            except Avatar.DoesNotExist:
+                comentario.avatar = None
+            
+            respuesta_a_id = request.POST.get('respuesta_a')
+            if respuesta_a_id:
+                comentario.respuesta_a_id = respuesta_a_id
+            
+            comentario.save()
+            return redirect('contenido', comunidad_id=comunidad_id)
+    else:
+        formulario = comentarioForm()
+
+    return render(request, "AppComunidad/contenido.html", {'publicacion': publicacion, 'comentarios': comentarios, 'formulario': formulario, 'es_autor': es_autor, 'avatar':obtenerAvatar(request)})
+
+@login_required
+def contenidoHome(request):
+    avatar=obtenerAvatar(request)
     publicaciones = Comunidad.objects.all()
 
-    avatar=obtenerAvatar(request)
-    return render(request, "AppComunidad/contenido.html", {'publicaciones': publicaciones}, {"avatar":obtenerAvatar(request)})
+    success_messages = messages.get_messages(request)
+
+    return render(request, "AppComunidad/contenidohome.html", {'publicaciones':publicaciones, 'avatar':obtenerAvatar(request)})
+
+@login_required
+def foroHome(request):
+    avatar = obtenerAvatar(request)
+    preguntas = PreguntasCom.objects.all()
+
+    success_messages = messages.get_messages(request)
+
+    return render(request, "AppComunidad/forohome.html", {'preguntas': preguntas, 'avatar':obtenerAvatar(request)})
+
+@login_required
+def foro(request, preguntas_id):
+    avatar = obtenerAvatar(request)
+    pregunta = get_object_or_404(PreguntasCom, id=preguntas_id)
+    comentariosp = ComentarioPregunta.objects.filter(publicacion=pregunta, respuesta_a=None)  # Obtener comentarios principales sin respuesta_a
+
+    es_autor = pregunta.autor == request.user
+
+    if request.method == 'POST':
+        formulario = comentarioPregunta(request.POST)
+        if formulario.is_valid():
+            comentario = formulario.save(commit=False)
+            comentario.autor = request.user
+            comentario.publicacion = pregunta
+
+            try:
+                avatar_usuario = Avatar.objects.get(user=request.user)
+                comentario.avatar = avatar_usuario.imagen
+            except Avatar.DoesNotExist:
+                comentario.avatar = None
+
+            respuesta_a_id = request.POST.get('respuesta_a')
+            if respuesta_a_id:
+                comentario.respuesta_a = ComentarioPregunta.objects.get(id=respuesta_a_id)
+
+            comentario.save()
+            return redirect('foro', preguntas_id=preguntas_id)
+    else:
+        formulario = comentarioPregunta()
+
+    return render(request, "AppComunidad/foro.html", {'pregunta': pregunta, 'comentariosp': comentariosp, 'formulario': formulario, 'es_autor': es_autor, 'avatar': avatar})
+
+#Pagina en proceso de creación
+@login_required
+def novedades(request):
+
+    en_novedades = True
+    return render(request, 'AppComunidad/novedades.html', {'en_novedades': en_novedades})
+
 
 #Función para crear publicaciones
 @login_required
 def crear_seccion(request):
     avatar=obtenerAvatar(request)
-    if request.method == "POST":
-        form = crearBlogForm(request.POST, request.FILES)
+    if request.method=="POST":
+        form=crearBlogForm(request.POST, request.FILES)
         if form.is_valid():
-            seccion = form.save(commit=False)
-            seccion.autor = request.user 
+            seccion=form.save(commit=False)
+            seccion.autor=request.user 
             seccion.save()
-            return redirect('inicioComunidad')
+            success_messages = messages.get_messages(request)
+            return redirect('contenido', comunidad_id=seccion.id)
     else:
         form = crearBlogForm()
 
-    return render(request, "AppComunidad/crearblog.html", {'form': form}, {"avatar":obtenerAvatar(request)})
+    return render(request, "AppComunidad/crearblog.html", {'form': form, "avatar":obtenerAvatar(request)})
+
+@login_required
+def crear_foro(request):
+    avatar = obtenerAvatar(request)
+    if request.method == 'POST':
+        formulario = crearForoForm(request.POST, request.FILES)
+        if formulario.is_valid():
+            pregunta = formulario.save(commit=False)
+            pregunta.autor = request.user
+            pregunta.save()
+            messages.success(request, 'Publicación creada!')
+            return redirect('foro', preguntas_id=pregunta.id)
+    else:
+        formulario = crearForoForm()
+
+    return render(request, "AppComunidad/crearforo.html", {'formulario': formulario, 'avatar': obtenerAvatar(request)})
+
 
 
 #Función para editar publicaciones
 @login_required
 def editar_seccion(request, comunidad_id):
     avatar=obtenerAvatar(request)
-    comunidad = get_object_or_404(Comunidad, id=comunidad_id)
-    if comunidad.autor == request.user:
+    publicacion = get_object_or_404(Comunidad, id=comunidad_id)
+    if publicacion.autor == request.user:
         if request.method == "POST":
-            form = crearBlogForm(request.POST, request.FILES, instance=comunidad)
+            form = crearBlogForm(request.POST, request.FILES, instance=publicacion)
             if form.is_valid():
                 form.save()
-                return redirect('contenido')
+                messages.success(request, 'La publicación se ha guardado correctamente.')
+                return redirect('contenidohome', comunidad_id=publicacion.id)
         else:
-            form = crearBlogForm(instance=comunidad)
+            form = crearBlogForm(instance=publicacion)
         
-        return render(request, "AppComunidad/editarblog.html", {'form': form, 'comunidad': comunidad}, {"avatar":obtenerAvatar(request)})
-    else:
-        return HttpResponseForbidden("No tienes permisos para editar esta publicación")
+        return render(request, "AppComunidad/editarblog.html", {'form': form, 'publicacion': publicacion, "avatar":obtenerAvatar(request)})
+
+
+@login_required
+def editar_foro(request, preguntas_id):
+    avatar = obtenerAvatar(request)
+    pregunta = get_object_or_404(PreguntasCom, id=preguntas_id)    
+    if pregunta.autor == request.user:
+        if request.method == "POST":
+            formulario = crearForoForm(request.POST, request.FILES, instance=pregunta)
+            if formulario.is_valid():
+                formulario.save()
+                messages.success(request, 'El contenido se ha editado correctamente.')
+                return redirect('forohome', preguntas_id=preguntas_id)
+        else:
+            formulario = crearForoForm(instance=pregunta)
+        
+        return render(request, "AppComunidad/editarforo.html", {'formulario': formulario, 'pregunta': pregunta, "avatar":obtenerAvatar(request)})
 
 
 #Función para eliminar publicaciones
 @login_required
 def eliminar_seccion(request, comunidad_id):
-    avatar=obtenerAvatar(request)
-    comunidad = get_object_or_404(Comunidad, id=comunidad_id)
-    if comunidad.autor == request.user:
-        if request.method == "POST" or 'eliminar' in request.POST:
-            comunidad.delete()
-            return redirect('contenido')
+    avatar = obtenerAvatar(request)
+    publicacion = get_object_or_404(Comunidad, id=comunidad_id)
+
+    if publicacion.autor == request.user:
+        if request.method == "POST" and 'eliminar' in request.POST:
+            publicacion.delete()
+            messages.success(request, 'La publicación fue eliminada.')
+
+            if publicacion.id is not None:
+                return redirect('contenidohome', comunidad_id=publicacion.id)
         else:
-            return render(request, "AppComunidad/eliminarblog.html", {'comunidad': comunidad} , {"avatar":obtenerAvatar(request)})
-    else:
-        return HttpResponseForbidden("No tienes permisos para eliminar esta publicación")
+            return render(request, "AppComunidad/eliminarblog.html", {'publicacion': publicacion, 'avatar':obtenerAvatar(request)})
+
 
 @login_required
-def ver_mensajes(request, usuario_id):
-    receptor = get_object_or_404(User, id=usuario_id)
-    mensajes = Mensaje.objects.filter(receptor=receptor, emisor=request.user) | Mensaje.objects.filter(receptor=request.user, emisor=receptor)
-    mensajes = mensajes.order_by('fecha_envio')
-    form = MensajeForm()
-    return render(request, 'chat/ver_mensajes.html', {'receptor': receptor, 'mensajes': mensajes, 'form': form})
-
-@login_required
-def enviar_mensaje(request, usuario_id):
-    receptor = get_object_or_404(User, id=usuario_id)
-    if request.method == 'POST':
-        form = MensajeForm(request.POST)
-        if form.is_valid():
-            mensaje = form.save(commit=False)
-            mensaje.emisor = request.user
-            mensaje.receptor = receptor
-            mensaje.save()
-            messages.success(request, 'Mensaje enviado con éxito.')
-            return redirect('ver_mensajes', usuario_id=usuario_id)
+def eliminar_foro(request, preguntas_id):
+    avatar = obtenerAvatar(request)
+    pregunta = get_object_or_404(PreguntasCom, id=preguntas_id)
+    
+    if pregunta.autor == request.user:
+        if request.method == "POST" or 'eliminar' in request.POST:
+            pregunta.delete()
+            messages.success(request, 'La publicación fue eliminada.')
+            return redirect('forohome')
+        else:
+            return render(request, "AppComunidad/eliminarforo.html", {'pregunta': pregunta, "avatar": obtenerAvatar(request)})
     else:
-        form = MensajeForm()
-    return render(request, 'chat/enviar_mensaje.html', {'receptor': receptor, 'form': form})
-
+        return HttpResponse('No tienes permisos para eliminar esta publicación.')
+    
 
 
         

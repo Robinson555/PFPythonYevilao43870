@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comunidad, Mensaje
+from .models import Comunidad, PreguntasCom, Comentario, ComentarioPregunta
 
 class crearBlogForm(forms.ModelForm):
     class Meta:
@@ -8,10 +8,23 @@ class crearBlogForm(forms.ModelForm):
 
     imagen = forms.ImageField(label='Imagen de Producto', widget=forms.ClearableFileInput(attrs={'id': 'imagen'}))
 
+class crearForoForm(forms.ModelForm):
+    class Meta:
+        model = PreguntasCom
+        fields = ['titulo', 'imagen', 'contenido']
 
-class MensajeForm(forms.ModelForm):
-    contenido = forms.CharField(widget=forms.Textarea(attrs={'rows': 2, 'placeholder': 'Escribe tu mensaje...'}))
+    imagen = forms.ImageField(label='Imagen', widget=forms.ClearableFileInput(attrs={'id': 'imagen'}))
+
+
+class comentarioForm(forms.ModelForm):
+    respuesta_a = forms.IntegerField(widget=forms.HiddenInput, required=False)
+    class Meta:
+        model  = Comentario
+        fields = ['contenido']
+
+class comentarioPregunta(forms.ModelForm):
+    respuesta_a = forms.IntegerField(widget=forms.HiddenInput, required=False)
 
     class Meta:
-        model = Mensaje
-        fields = ['contenido']
+        model = ComentarioPregunta 
+        fields = ['contenidop']

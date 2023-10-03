@@ -1,18 +1,49 @@
 {% extends "AppComunidad/padrecomunidad.html" %}
+
 {% load static %}
+
 
 {% block titulo %} Eliminar Blog {% endblock %}
 
 {% block contenido_comunidad %}
-  <h2>¿Estás seguro de que deseas eliminar esta publicación?</h2>
-  <p>Título: {{ comunidad.titulo }}</p>
-  <p>Contenido: {{ comunidad.contenido }}</p>
-  <p>Imagen:</p>
 
-  <form method="POST">
-    {% csrf_token %}
-    <button class="btn btn-danger" type="submit" name="eliminar">Eliminar</button>
-  </form>
+<h4>¿Estás seguro de que deseas eliminar esta publicación?</h4>
 
-  <a href="{% url 'contenido' %}" class="btn btn-secondary">Cancelar</a>
+<section class="mb-5" style="width: 70%;" >
+  <div class="card bg-light">
+    <div class="card-body">
+
+      
+      <div class="row gx-5 justify-content-start mb-4 comentario-form ml-3" style="width: 80%;" >
+        <div class="col-lg-8 col-xl-6">
+          <div class="mb-3">
+            <label for="id_titulo" class="form-label">Título: {{ publicacion.titulo }} </label>
+          </div>
+          <div class="mb-3 mb-1">
+            <label class="text" id="contenido" style="height: 5rem" name="contenido" required></label>
+            <label for="id_contenido" class="form-label mb-3 mb-5"> Contenido: {{ publicacion.contenido }} </label>
+          </div>
+            <p>Imagen: <img class="img-fluid rounded" src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" style="max-width: 100%; height: auto; max-height: 150px;" />  </p>
+        
+          <form method="POST">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit" name="eliminar">Eliminar</button>
+        
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %} 
+            <a href="{% url 'contenido' comunidad_id=publicacion.id %}" class="btn btn-secondary">Cancelar</a>
+          </form>
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 {% endblock %}

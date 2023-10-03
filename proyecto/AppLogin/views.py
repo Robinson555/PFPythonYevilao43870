@@ -41,15 +41,22 @@ def loginUsuario(request):
 
     
 def registro(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         user_form = RegistroUsuarioForm(request.POST)
         avatar_form = AvatarForm(request.POST, request.FILES)
         if user_form.is_valid() and avatar_form.is_valid():
-            messages.success(request, "¡Registro exitoso!")
+            info = user_form.cleaned_data
+            userName = info['username']
+            password = info['password1']
+            user = user_form.save()
+            usuario = authenticate(username=userName, password=password)
+            login(request, usuario)
+            avatar = Avatar(user=request.user, imagen=request.FILES["imagen"])
+            avatar.save()
+            messages.success(request, f'Nuevo usuario {userName} creado')
             return redirect('loginusuario')
         else:
             messages.error(request, "Error: Las contraseñas no coinciden o hay un problema en el formulario.")
-
     else:
         user_form = RegistroUsuarioForm()
         avatar_form = AvatarForm()
@@ -60,7 +67,6 @@ def registro(request):
 def editarusuario(request):
     avatar=obtenerAvatar(request)
     usuario=request.user
-
     if request.method=="POST":
         form=UserEditForm(request.POST)
         if form.is_valid():
@@ -76,7 +82,7 @@ def editarusuario(request):
             return render(request, "AppLogin/editarusuario.html", {"form": form, "nombreusuario":usuario.username, "mensaje":"Datos invalidos"})
     else:
         form=UserEditForm(instance=usuario)
-        return render(request, "AppLogin/editarusuario.html", {"form": form, "nombreusuario":usuario.username}, {"avatar":obtenerAvatar(request)})
+        return render(request, "AppLogin/editarusuario.html", {"form": form, "nombreusuario":usuario.username, "avatar":obtenerAvatar(request)})
 
 def seleccionarAvatar(request):
     if request.method == "POST":

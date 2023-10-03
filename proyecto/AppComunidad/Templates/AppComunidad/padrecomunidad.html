@@ -21,17 +21,24 @@
         <!-- <link href="css/styles.css" rel="stylesheet" /> -->
         <!-- <link href="{% static 'AppComunidad/css/styles.css' %}" rel="stylesheet" /> -->
         <link href="{% static 'AppComunidad/css/styles.css' %}" rel="stylesheet" />
-
-
+        <style>
+            body {
+                background-color: #F5F5DC; /* Color gris oscuro de fondo */
+            }
+        </style>
     </head>
-    <body>
+    <body style="display: flex; flex-direction: column; min-height: 100vh;">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
             <div class="container px-4 px-lg-5">
                 <a href="{% url 'inicioComunidad' %}"></a>
                 <a class="navbar-brand" href="http://127.0.0.1:8000/admin">
-                    <img src="{% static 'AppComunidad/assets/img/logohome.png' %}" alt="Ir al Panel de Administración" width="70rem" height="auto">
-                </a>
+                    {% if user.is_authenticated %}
+                    <a class="navbar-brand" href="http://127.0.0.1:8000/admin">
+                        <img src="{% static 'AppComunidad/assets/img/logohome.png' %}" alt="Ir al Panel de Administración" width="70rem" height="auto">
+                    </a>
+                    {% else %}
+                    {% endif %}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars"></i>
@@ -42,13 +49,15 @@
                         {% if user.is_authenticated %}
                         <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-info rounded" href="{% url 'inicioComunidad' %}"> Home </a></li>
                         <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-info rounded" href="{% url 'aboutme' %}"> About </a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-info rounded" href="{% url 'contenido' %}"> Comercio Pets </a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-info rounded" href="{% url 'inicioComunidad' %}"> Preguntas y Respuestas </a></li>
-                        <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-danger rounded"" href="{% url 'logout' %}"> Cerrar Sesion </a></li>
-                        
+                        <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-info rounded" href="{% url 'contenidohome' %}"> Comercio Comunidad </a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-info rounded" href="{% url 'forohome' %}"> Preguntas y Tips </a></li>
+                        <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-info rounded" href="{% url 'novedades' %}"> Novedades </a></li>
+                        <!-- chat -->
+                        <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-info rounded" href="{% url 'seleccionar_usuario' %}"> chat </a></li>
+                        <!-- Cerrar sesion -->
+                        <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-danger rounded" href="{% url 'logout' %}"> Cerrar Sesion </a></li>
                         <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-2 btn-dark rounded" > {{ user.username }} </a></li>
                         <img src="{{ avatar }}" alt="Avatar" style="width:50px;height:50px;">
-                        
                         <li class="nav-item"><a class="nav-link px-lg-2 py-2 py-lg-3 mx-1 btn-outline-warning rounded" href="{% url 'editarusuario' %}"> Editar Perfil </a></li>
                         <style>
                             .rounded {
@@ -62,24 +71,33 @@
                 </div>
             </div>
         </nav>
+        {% if en_novedades %}
+        <header class="masthead" style="background-image: url( '{% static 'AppComunidad/assets/img/notfound.jpg' %}' ) ">
+        {% else %}
         <header class="masthead" style="background-image: url( '{% static 'AppComunidad/assets/img/bannerprincipal.png' %}' ) ">
+        {% endif %}
             <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="site-heading">
                             <h1 class="mb-5"> {% block titulo %}   {% endblock %} </h1>
+                            {% if user.is_authenticated %}
                             <span class="subheading">Dedicado a las personas con mascotas, lugar de encuentro e información</span>
+                            {% else %}
+                            <span class="subheading"> <h3> Uso y Acceso al Blog solo para usuarios registrados</h3> </span>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
         </header>
-        {% block contenido_comunidad %}
 
-        {% endblock %}
-        <!-- Footer-->
+            {% block contenido_comunidad %}
+                <main class="contenido-comunidad">
+                </main>
+            {% endblock %}
         <footer class="border-top">
-            <div class="container px-4 px-lg-5">
+            <div class="container">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="small text-center text-muted fst-italic">Robinson Yevilao Comision #43870 &copy; -  Todos los derechos reservados</div>
@@ -87,6 +105,7 @@
                 </div>
             </div>
         </footer>
+        <!-- Footer-->
         <!-- Bootstrap core JS-->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

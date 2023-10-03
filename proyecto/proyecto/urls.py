@@ -31,6 +31,7 @@ urlpatterns = [
     path('AppProyecto/', include("AppProyecto.urls")),
     path('AppComunidad/', include("AppComunidad.urls")),
     path('AppLogin/', include("AppLogin.urls")),
+    path('AppMensaje/', include("AppMensaje.urls")),
 ]
 
 if settings.DEBUG:

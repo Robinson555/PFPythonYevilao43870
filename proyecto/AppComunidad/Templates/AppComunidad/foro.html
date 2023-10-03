@@ -2,29 +2,106 @@
 
 {% load static %}
 
-{% block titulo %} Contenido Publicado {% endblock %}
+{% block titulo %} Foro Publicado {% endblock %}
 
 {% block contenido_comunidad %}
 
-    <h1>Contenido de la Comunidad</h1>
+<article class="mb-4" style="margin: 20px;" >
+    <!-- Post header -->
+    <header class="mb-4">
+        <!-- Post title -->
+        <h1 class="fw-bolder mb-1">{{ pregunta.titulo }}</h1>
+        
+        {% if user.is_authenticated %}
+            {% if es_autor %}
+                <ul>
+                    <li>
+                        <a href="{% url 'editarforo' preguntas_id=pregunta.id %}" class="btn btn-warning">Editar Foro</a>
+                        <a href="{% url 'eliminarforo' preguntas_id=pregunta.id %}" class="btn btn-danger">Eliminar Foro</a>
+                    </li>
+                </ul>
+            {% endif %}
+        {% endif %}
+        <!-- Post meta content -->
+        <div class="text-muted fst-italic mb-2">
+            Posted on {{ pregunta.fecha_creacion }} by {{ pregunta.autor }}
+        </div>
+    </header>
+    <!-- Preview image figure -->
+    <figure class="mb-4">
+        <img class="img-fluid rounded" src="{{ pregunta.imagen.url }}" alt="{{ pregunta.titulo }}" style="max-width: 100%; height: auto; max-height: 300px;" />
+    </figure>
+    <!-- Post content -->
+    <section class="mb-5">
+        {{ pregunta.contenido | safe }}
+    </section>
+</article>
 
-    <ul>
-        {% for comunidad in comunidad %}
-        <li>
-            <strong> {{ contenido.titulo}} </strong>
-            {{ tema.descripcion }}
-            <img src="{{ comunidad.imagen }}" alt="{{ comunidad.titulo }}" width="120px">
-            <br>
-            <a href="{% url 'editarblog' contenido.id %}" class="btn btn-Warning"> Editar Blog </a>
-            <a href="{% url 'eliminarblog' contenido.id %}" class="btn btn-Danger"> Eliminar Blog </a>
+<!-- Comment form-->
+<form class="mb-4 comentario-form" style="width: 70%;" method="POST">
+    {% csrf_token %}
+    <textarea class="form-control" name="contenido" rows="3" placeholder="Añadir un comentario"></textarea>
+    <button type="submit" class="btn btn-primary">Publicar Comentario</button>
+</form>
+<style>
+    .comentario-form {
+        margin-top: 20px;
+    }
+</style>
+<!-- Comment section -->
+<!-- Comment section -->
+<section class="mb-5" style="width: 70%;">
+    <div class="card bg-light">
+        <div class="card-body">
+            {% for comentario_principal in comentariosp %}
+                <!-- Comentario principal -->
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0">
+                        {% if comentario_principal.avatar %}
+                            <img class="rounded-circle" src="{{ comentario_principal.avatar.url }}" alt="Avatar de usuario" style="width: 30px" />
+                        {% else %}
+                            <!-- Puedes mostrar un avatar predeterminado aquí si lo deseas -->
+                            <img class="rounded-circle" src="{% static 'avatars/avatar-predeterminado.png' %}" alt="Avatar de usuario predeterminado" />
+                        {% endif %}
+                    </div>
+                    <div class="ms-3">
+                        <div class="fw-bold">{{ comentario_principal.autor.username }}</div>
+                        {{ comentario_principal.contenidop }}
+                        <small class="text-muted">Publicado el {{ comentario_principal.fecha }}</small>
+                    </div>
+                </div>
 
-        </li>
-        {% empty %}
-            <p>No hay blog </p>
-        {% endfor %}
+                <!-- Respuestas anidadas -->
+                {% for respuesta in comentario_principal.comentariopregunta_set.all %}
+                    {% if respuesta.respuesta_a_id == comentario_principal.id %}
+                        <div class="d-flex mb-4 ms-5 mt-4">
+                            <div class="flex-shrink-0">
+                                {% if respuesta.avatar %}
+                                    <img class="rounded-circle" src="{{ respuesta.avatar.url }}" alt="Avatar de usuario" style="width: 20px" />
+                                {% else %}
+                                    <!-- Intento de avatar predeterminado -->
+                                    <img class="rounded-circle" src="{% static 'avatars/avatar-predeterminado.png' %}" alt="Avatar de usuario predeterminado" />
+                                {% endif %}
+                            </div>
+                            <div class="ms-3">
+                                <div class="fw-bold">{{ respuesta.autor.username }}</div>
+                                {{ respuesta.contenidop }}
+                                <small class="text-muted">Publicado el {{ respuesta.fecha }}</small>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
 
-        <a href="{% url 'foro' %}" class="btn btn-Sucess">Crear plublicación</a>
-
-    </ul>
+                <!-- Formulario de respuesta -->
+                <form class="mb-4 ms-5 mt-4 text-md" method="POST">
+                    {% csrf_token %}
+                    <textarea class="form-control text-md" style="width: 50%;" name="contenido" rows="3" placeholder="Responder a este comentario"></textarea>
+                    <input type="hidden" class="text-md" name="respuesta_a" value="{{ comentario_principal.id }}">
+                    <button type="submit" class="btn btn-info text-md">Publicar respuesta</button>
+                </form>
+            {% endfor %}
+        </div>
+    </div>
+</section>
 
 {% endblock %}

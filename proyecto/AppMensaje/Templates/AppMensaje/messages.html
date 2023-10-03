@@ -1,0 +1,49 @@
+{% extends "AppComunidad/padrecomunidad.html" %}
+
+{% load static %}
+
+{% block titulo %} Ingreso de Credenciales {% endblock %}
+
+{% block contenido_comunidad %}
+
+    <h2>Mensajería Blog</h2><br>
+
+    <div id="new-msg-container">
+        <form id="msg-form" action="{% url 'messages' %}" method="POST">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="btn btn-primary btn-sm">Enviar Mensaje</button>
+
+            <p>{{ mensaje }}</p>
+        </form>
+    </div>
+
+    <div id="all-msg-container">
+        {% if received_messages %}
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">De</th>
+                        <th scope="col">Mensaje</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for msg in received_messages %}
+                        <tr>
+                            <td><a href="{% url 'viewMsg' msg.id %}">{{ msg.sender }}</a></td>
+                            <td><a href="{% url 'viewMsg' msg.id %}">{{ msg.content }}</a></td>
+                            <td><a href="{% url 'viewMsg' msg.id %}">{{ msg.date_sent }}</a></td>
+                            <td><a href="{% url 'delete_message' msg.id %}"><button class="btn btn-success btn-sm">Delete</button></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>No tienes mensajes.</p>
+        {% endif %}
+    </div>
+{% endblock %}

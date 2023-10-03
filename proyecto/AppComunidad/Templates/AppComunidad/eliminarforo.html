@@ -1,0 +1,44 @@
+{% extends "AppComunidad/padrecomunidad.html" %}
+
+{% load static %}
+
+
+{% block titulo %} Eliminar Blog {% endblock %}
+
+{% block contenido_comunidad %}
+
+<h4>¿Estás seguro de que deseas eliminar esta publicación?</h4>
+
+<section class="mb-5" style="width: 70%;" >
+  <div class="card bg-light">
+    <div class="card-body">
+      <div class="row gx-5 justify-content-start mb-4 comentario-form ml-3" style="width: 80%;" >
+        <div class="col-lg-8 col-xl-6">
+          <div class="mb-3">
+            <label for="id_titulo" class="form-label">Título: {{ pregunta.titulo }} </label>
+          </div>
+          <div class="mb-3 mb-1">
+            <label class="text" id="contenido" style="height: 5rem" name="contenido" required></label>
+            <label for="id_contenido" class="form-label mb-3 mb-5"> Contenido: {{ pregunta.contenido }} </label>
+          </div>
+            <p>Imagen: <img class="img-fluid rounded" src="{{ pregunta.imagen.url }}" alt="{{ pregunta.titulo }}" style="max-width: 100%; height: auto; max-height: 150px;" />  </p>
+        
+          <form method="POST">
+            {% csrf_token %}
+            <button class="btn btn-danger" type="submit" name="eliminar">Eliminar</button>
+        
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %} 
+            <a href="{% url 'foro' pregunta.id %}" class="btn btn-secondary">Cancelar</a>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "AppComunidad/padrecomunidad.html" %}
+
+{% load static %}
+
+{% block titulo %} Agregar publicación al Blog {% endblock %}
+
+{% block contenido_comunidad %}
+
+<h1 class="text-center"> Aqui podras agregar tu contenido a la comunidad</h1>
+
+<div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+    <div class="text-center mb-5">
+        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+        <h1 class="fw-bolder">Agregar una publicación al Blog</h1>
+        <p class="lead fw-normal text-muted mb-0"></p>
+    </div>
+    <div class="row gx-5 justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+                
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="titulo" type="text" placeholder="Ingresa el titulo del evento" name="titulo" required />
+                    <label for="titulo">Título</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control" id="imagen" type="file" name="imagen" required />
+                    <label for="imagen">Imagen</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" id="contenido" placeholder="Ingresa una descripción" style="height: 10rem" name="contenido" required></textarea>
+                    <label for="contenido">Contenido</label>
+                </div>
+                <div class="d-grid"><button class="btn btn-primary btn-lg" type="submit">Publicar</button></div>
+                {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </form>
+            <div class="contenidoJ">
+                <a class="form-button btn btn-warning" href="{% url 'foro' preguntas_id=pregunta.id %}">Volver atrás</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
