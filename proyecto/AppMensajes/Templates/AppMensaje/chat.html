@@ -2,26 +2,23 @@
 
 {% load static %}
 
-{% block titulo %} Ingreso de Credenciales {% endblock %}
+{% block titulo %} Plataforma Usuarios {% endblock %}
 
 {% block contenido_comunidad %}
 
     <h2>Mensajería Blog</h2><br>
 
     <div id="new-msg-container">
-        <form id="msg-form" action="{% url 'messages' %}" method="POST">
+        <form id="msg-form" action="{% url 'chat' %}" method="POST">
             {% csrf_token %}
-
             {{ form.as_p }}
-
             <button type="submit" class="btn btn-primary btn-sm">Enviar Mensaje</button>
-
-            <p>{{ mensaje }}</p>
         </form>
+        <p>{{ mensaje }}</p>
     </div>
 
     <div id="all-msg-container">
-        {% if received_messages %}
+        {% if mensajes_recibidos %}
             <table class="table table-success table-striped">
                 <thead>
                     <tr>
@@ -32,12 +29,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for msg in received_messages %}
+                    {% for msg in mensajes_recibidos %}
                         <tr>
-                            <td><a href="{% url 'viewMsg' msg.id %}">{{ msg.sender }}</a></td>
-                            <td><a href="{% url 'viewMsg' msg.id %}">{{ msg.content }}</a></td>
-                            <td><a href="{% url 'viewMsg' msg.id %}">{{ msg.date_sent }}</a></td>
-                            <td><a href="{% url 'delete_message' msg.id %}"><button class="btn btn-success btn-sm">Delete</button></a></td>
+                            <td><a href="{% url 'vmsm' msg.id %}">{{ msg.enviado }}</a></td>
+                            <td><a href="{% url 'vmsm' msg.id %}">{{ msg.contenido }}</a></td>
+                            <td><a href="{% url 'vmsm' msg.id %}">{{ msg.fechaenvio }}</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -46,4 +42,4 @@
             <p>No tienes mensajes.</p>
         {% endif %}
     </div>
-{% endblock %}
+{% endblock }

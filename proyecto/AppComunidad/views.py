@@ -166,7 +166,7 @@ def editar_seccion(request, comunidad_id):
             if form.is_valid():
                 form.save()
                 messages.success(request, 'La publicación se ha guardado correctamente.')
-                return redirect('contenidohome', comunidad_id=publicacion.id)
+                return redirect('contenido', comunidad_id=publicacion.id)
         else:
             form = crearBlogForm(instance=publicacion)
         

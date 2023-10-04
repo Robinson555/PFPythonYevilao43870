@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'AppProyecto',
     'AppLogin',
     'AppComunidad',
-    'AppMensaje',
+    'AppMensajes',
 ]
 
 MIDDLEWARE = [

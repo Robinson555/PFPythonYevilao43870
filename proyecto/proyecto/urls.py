@@ -21,6 +21,7 @@ from django.conf import settings
 from AppProyecto.views import *
 from AppLogin.views import loginUsuario
 from AppComunidad.views import *
+from AppMensajes.views import *
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -30,8 +31,8 @@ urlpatterns = [
     path('', loginUsuario, name="loginusuario"),
     path('AppProyecto/', include("AppProyecto.urls")),
     path('AppComunidad/', include("AppComunidad.urls")),
+    path('AppMensajes/', include("AppMensajes.urls")),
     path('AppLogin/', include("AppLogin.urls")),
-    path('AppMensaje/', include("AppMensaje.urls")),
 ]
 
 if settings.DEBUG:
