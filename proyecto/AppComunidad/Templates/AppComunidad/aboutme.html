@@ -1,58 +1,49 @@
-{% extends "AppComunidad/padrecomunidad.html" %}
+{% extends "AppComunidad/padrecomunidad.html" %} {% load static %} {% block titulo %}
+<h1 class="subrayado">Acerca de Mi</h1>
+{% endblock %} {% block contenido_comunidad %}
 
-{% load static %}
-
-{% block titulo %}
-    <h1 class="subrayado">Acerca de Mi</h1>
-{% endblock %}
-
-{% block contenido_comunidad %}
-
-    
 <div class="container">
-    <h2 class="text-center text-dark">
-        Acerca de Mi
-    </h2>
-    <br>
+    <h2 class="text-center text-dark">Acerca de Mi</h2>
+    <br />
     <div class="row g-4">
         <div class="col-md-6 col-lg-3">
             <div class="card bg-secondary">
-                 <div class="card-body text-center">
-                     <img src="{% static 'AppComunidad/assets/img/aboutme.png' %}" class="rounded-circle mb-3" width="150px">
-                 <h3 class="card-title mb-3"></h3>
-                 <p class="card-text"> Robinson Yevilao</p>
-                 <p class="card-text">Sigueme en:</p>
-                 <ul class="list-inline text-center">
-                    <li class="list-inline-item">
-                        <a href="https://www.linkedin.com/in/robinson-yevilao/">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-linkedin-in fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="https://github.com/Robinson555">
-                            <span class="fa-stack fa-lg">
-                                <i class="fas fa-circle fa-stack-2x"></i>
-                                <i class="fab fa-github fa-stack-1x fa-inverse"></i>
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-                 <a href="https://github.com/Robinson555"><i class="bi bi-github text-dark mx-1"></i></a>
-                 </div>
+                <div class="card-body text-center">
+                    <img src="{% static 'AppComunidad/assets/img/aboutme.png' %}" class="rounded-circle mb-3" width="150px" />
+                    <h3 class="card-title mb-3"></h3>
+                    <p class="card-text">Robinson Yevilao</p>
+                    <p class="card-text">Sigueme en:</p>
+                    <ul class="list-inline text-center">
+                        <li class="list-inline-item">
+                            <a href="https://www.linkedin.com/in/robinson-yevilao/">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-linkedin-in fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                        <li class="list-inline-item">
+                            <a href="https://github.com/Robinson555">
+                                <span class="fa-stack fa-lg">
+                                    <i class="fas fa-circle fa-stack-2x"></i>
+                                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                </span>
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="https://github.com/Robinson555"><i class="bi bi-github text-dark mx-1"></i></a>
+                </div>
             </div>
         </div>
         <div class="col">
-         <div class="">
-            <div class="text-start text-justify">
-                <p>Hola, soy nuevo en programación, actualmente me encuentro terminando el curso de Python comisión #43870,</p>
-                <p>y cursando simultáneamente JavaScript.</p>
-                <p>En lo laboral, me desempeño en el área de soporte informática y actualmente estamos migrando de sistemas a la utilización del lenguaje Python con Django.</p>
-            </div>     
-         </div>
-     </div>
+            <div class="">
+                <div class="text-start text-justify">
+                    <p>Hola, soy nuevo en programación, actualmente me encuentro terminando el curso de Python comisión #43870,</p>
+                    <p>y cursando simultáneamente JavaScript.</p>
+                    <p>En lo laboral, me desempeño en el área de soporte informática y actualmente estamos migrando de sistemas a la utilización del lenguaje Python con Django.</p>
+                </div>
+            </div>
+        </div>
     </div>
- </div>
+</div>
 {% endblock %}

@@ -1,8 +1,8 @@
-{% extends "AppComunidad/padrecomunidad.html" %}
+{% extends "AppComunidad/padrecomunidad.html" %} 
 
-{% load static %}
+{% load static %} 
 
-{% block titulo %} Comunidad Austral {% endblock %}
+{% block titulo %} Comunidad Austral {% endblock %} 
 
 {% block contenido_comunidad %}
 
@@ -13,8 +13,8 @@
                 <div class="col-lg-8 col-xl-6">
                     <div class="text-center">
                         <h2 class="fw-bolder">Sección de Comercio</h2>
-                        <br>
-                        <br>
+                        <br />
+                        <br />
                         <a href="{% url 'contenidohome' %}" class="btn btn-info mb-4"> Visitar Comercio y ver todas las publicaciones</a>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                                 <div class="d-flex align-items-center">
                                     <div class="small">
                                         <div class="fw-bold">{{ publicacion.autor.username }}</div>
-                                        <div class="text-muted">{{ publicacion.fecha_creacion|date:"F d, Y" }} </div>
+                                        <div class="text-muted">{{ publicacion.fecha_creacion|date:"F d, Y" }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -46,16 +46,16 @@
             </div>
         </div>
     </section>
-    <br>
-    <br>
+    <br />
+    <br />
     <section class="py-5">
         <div class="container px-5 my-5">
             <div class="row gx-5 justify-content-center">
                 <div class="col-lg-8 col-xl-6">
                     <div class="text-center">
                         <h2 class="fw-bolder">Sección Preguntas y Tips</h2>
-                        <br>
-                        <br>
+                        <br />
+                        <br />
                         <a href="{% url 'forohome' %}" class="btn btn-info mb-4"> Visitar Foro informativo </a>
                     </div>
                 </div>

@@ -1,58 +1,45 @@
-{% extends "AppComunidad/padrecomunidad.html" %}
-
-{% load static %}
-
-{% block titulo %} Ingreso de Credenciales {% endblock %}
-
-{% block contenido_comunidad %}
+{% extends "AppComunidad/padrecomunidad.html" %} {% load static %} {% block titulo %} Ingreso de Credenciales {% endblock %} {% block contenido_comunidad %}
 <section class="auto">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5.1">
-                <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                <div class="card bg-dark text-white" style="border-radius: 1rem">
                     <div class="card-body p-5 text-center">
                         <div class="mb-md-5 mt-md-4 pb-5 text-justify">
-
                             <h2 class="fw-bold mb-2 text-uppercase text-center">Editar Usuario</h2>
                             <p class="text-white-50 mb-5 text-center">Modifica tus datos:</p>
 
                             <form action="{% url 'editarusuario' %}" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
 
-                                <div class="mb-3" style="display: flex; justify-content: space-between;">
+                                <div class="mb-3" style="display: flex; justify-content: space-between">
                                     <label for="{{ form.nombre.id_for_label }}" class="form-label">Nombre</label>
-                                    {{ form.nombre }}
-                                    {{ form.nombre.errors }}
+                                    {{ form.nombre }} {{ form.nombre.errors }}
                                 </div>
 
-                                <div class="mb-3" style="display: flex; justify-content: space-between;">
+                                <div class="mb-3" style="display: flex; justify-content: space-between">
                                     <label for="{{ form.apellido.id_for_label }}" class="form-label">Apellido</label>
-                                    {{ form.apellido }}
-                                    {{ form.apellido.errors }}
+                                    {{ form.apellido }} {{ form.apellido.errors }}
                                 </div>
 
-                                <div class="mb-3" style="display: flex; justify-content: space-between;">
+                                <div class="mb-3" style="display: flex; justify-content: space-between">
                                     <label for="{{ form.email.id_for_label }}" class="form-label">Correo electrónico</label>
-                                    {{ form.email }}
-                                    {{ form.email.errors }}
+                                    {{ form.email }} {{ form.email.errors }}
                                 </div>
-                                <br>
-                                <div class="mb-3" style="display: flex; justify-content: space-between;">
+                                <br />
+                                <div class="mb-3" style="display: flex; justify-content: space-between">
                                     <label for="{{ form.password1.id_for_label }}" class="form-label">Nueva contraseña</label>
-                                    {{ form.password1 }}
-                                    {{ form.password1.errors }}
+                                    {{ form.password1 }} {{ form.password1.errors }}
                                 </div>
-                                <br>
-                                <div class="mb-3" style="display: flex; justify-content: space-between;">
+                                <br />
+                                <div class="mb-3" style="display: flex; justify-content: space-between">
                                     <label for="{{ form.password2.id_for_label }}" class="form-label">Confirmar contraseña</label>
-                                    {{ form.password2 }}
-                                    {{ form.password2.errors }}
+                                    {{ form.password2 }} {{ form.password2.errors }}
                                 </div>
-                                <br>
-                                <div class="mb-3" style="display: flex; justify-content: space-between;">
+                                <br />
+                                <div class="mb-3" style="display: flex; justify-content: space-between">
                                     <label for="{{ form.imagen.id_for_label }}" class="form-label text-start">Imagen de Perfil</label>
-                                    {{ form.imagen }}
-                                    {{ form.imagen.errors }}
+                                    {{ form.imagen }} {{ form.imagen.errors }}
                                 </div>
                                 <div class="d-flex justify-content-between">
                                     <button class="btn btn-outline-light btn-lg px-5" type="submit">Guardar</button>
@@ -64,15 +51,14 @@
                         <div>
                             <p class="mb-0">¿Quieres volver a la página de inicio? <a href="{% url 'inicioComunidad' %}" class="text-white-50 fw-bold">Ir a la página de inicio</a></p>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
-<br>
-<br>
-<br>
-<br>
+<br />
+<br />
+<br />
+<br />
 {% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'AppComunidad/padrecomunidad.html' %}
+
+{% load static %}
+
+{% block titulo %} Detalle del Mensaje {% endblock %} 
+
+{% block contenido_comunidad %}
+<style>
+    .formulario-container {
+        border-radius: 2rem;
+        background-color: #837171; 
+        padding: 20px;
+        margin: 0 auto;
+    }
+</style>
+
+<div class="formulario-container">
+    <form method="post">
+        {% csrf_token %}
+        <div class="col-8 justify-content-start">
+            <p>ID del mensaje: {{ vm.id }}</p>
+            <div class="form-group">
+                <label for="fecha">Fecha:</label>
+                <p id="fecha" class="font-weight-bold h3 text-black">{{ vm.fechaenvio }}</p>
+            </div>
+            <div class="form-group">
+                <label for="enviado">De:</label>
+                <p id="enviado" class="font-weight-bold h3 text-black">{{ vm.enviado }}</p>
+            </div>
+            <div class="form-group">
+                <label for="enviado">Para:</label>
+                <p id="enviado" class="font-weight-bold h3 text-black">{{ vm.recibido }}</p>
+            </div>
+            <div class="form-group">
+                <label for="contenido">Mensaje:</label>
+                <p id="contenido" class="font-weight-bold h3 text-black">{{ vm.contenido }}</p>
+            </div>
+        </div>
+        <div class="container text-center">
+            <a href="{% url 'chat' %}"><button class="btn btn-success m-1 sm-1">Volver</button></a>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

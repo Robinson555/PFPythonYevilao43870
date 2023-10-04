@@ -1,4 +1,4 @@
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth import login, authenticate
@@ -151,7 +151,9 @@ def crear_foro(request):
     else:
         formulario = crearForoForm()
 
-    return render(request, "AppComunidad/crearforo.html", {'formulario': formulario, 'avatar': obtenerAvatar(request)})
+    pregunta = None
+
+    return render(request, "AppComunidad/crearforo.html", {'formulario': formulario, 'avatar': obtenerAvatar(request), 'pregunta': pregunta})
 
 
 
@@ -183,29 +185,31 @@ def editar_foro(request, preguntas_id):
             if formulario.is_valid():
                 formulario.save()
                 messages.success(request, 'El contenido se ha editado correctamente.')
-                return redirect('forohome', preguntas_id=preguntas_id)
+                return redirect('foro', preguntas_id=preguntas_id)
         else:
             formulario = crearForoForm(instance=pregunta)
         
         return render(request, "AppComunidad/editarforo.html", {'formulario': formulario, 'pregunta': pregunta, "avatar":obtenerAvatar(request)})
 
-
-#Función para eliminar publicaciones
 @login_required
 def eliminar_seccion(request, comunidad_id):
     avatar = obtenerAvatar(request)
-    publicacion = get_object_or_404(Comunidad, id=comunidad_id)
-
+    
+    try:
+        publicacion = Comunidad.objects.get(id=comunidad_id)
+    except Comunidad.DoesNotExist:
+        
+        return redirect('contenidohome') 
+    
     if publicacion.autor == request.user:
         if request.method == "POST" and 'eliminar' in request.POST:
             publicacion.delete()
             messages.success(request, 'La publicación fue eliminada.')
-
-            if publicacion.id is not None:
-                return redirect('contenidohome', comunidad_id=publicacion.id)
+            return redirect('contenidohome') 
         else:
             return render(request, "AppComunidad/eliminarblog.html", {'publicacion': publicacion, 'avatar':obtenerAvatar(request)})
-
+    else:
+        return HttpResponse('No tienes permisos para eliminar esta publicación.')
 
 @login_required
 def eliminar_foro(request, preguntas_id):

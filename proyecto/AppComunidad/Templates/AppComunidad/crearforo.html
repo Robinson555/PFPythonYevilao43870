@@ -40,7 +40,10 @@
                 {% endif %}
             </form>
             <div class="contenidoJ">
+                {% if pregunta %}
                 <a class="form-button btn btn-warning" href="{% url 'foro' preguntas_id=pregunta.id %}">Volver atrás</a>
+                {% endif %}
+                
             </div>
         </div>
     </div>

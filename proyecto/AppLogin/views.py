@@ -23,7 +23,6 @@ def obtenerAvatar(request):
     else:
         return "/media/avatars/avatarpordefecto.png"
 
-
 def loginUsuario(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -77,9 +76,11 @@ def editarusuario(request):
             usuario.password1=info["password1"]
             usuario.password2=info["password2"]
             usuario.save()
-            return render(request, "AppLogin/loginusuario.html", {"mensaje":f"Usuario {usuario.username} editado correctamente"})
+            messages.success(request, f'Cambios guardados exitosamente')
+            return redirect('homecomunidad')
         else:
-            return render(request, "AppLogin/editarusuario.html", {"form": form, "nombreusuario":usuario.username, "mensaje":"Datos invalidos"})
+            messages.error(request, f"Error: Reintente, datos mal ingresados")
+            return redirect('editarusuario')
     else:
         form=UserEditForm(instance=usuario)
         return render(request, "AppLogin/editarusuario.html", {"form": form, "nombreusuario":usuario.username, "avatar":obtenerAvatar(request)})

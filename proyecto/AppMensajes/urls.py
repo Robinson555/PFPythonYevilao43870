@@ -16,10 +16,12 @@ Including another URLconf
 """
 
 from django.urls import path
-from .views import vista_chat, vmsm
+from .views import vista_chat, vmsm, visualm
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('chat/', vista_chat, name="chat"),
-    path('verchat/<int:id>/', vmsm, name="registromensaje"),
+    path('verchatv/<int:id>/', vmsm, name="registromensaje"),
+    path('verchat/<int:id>/', visualm, name="vmensaje"),
+    
 ]

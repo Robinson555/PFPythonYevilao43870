@@ -1,10 +1,4 @@
-{% extends "AppComunidad/padrecomunidad.html" %}
-
-{% load static %}
-
-{% block titulo %} Editar Blog {% endblock %}
-
-{% block contenido_comunidad %}
+{% extends "AppComunidad/padrecomunidad.html" %} {% load static %} {% block titulo %} Editar Blog {% endblock %} {% block contenido_comunidad %}
 <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
     <div class="text-center mb-5">
         <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
@@ -13,7 +7,8 @@
     </div>
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-8 col-xl-6">
-            <form method="POST" enctype="multipart/form-data"> {% csrf_token %}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="mb-3">
                     <label for="id_titulo" class="form-label">Título</label>
                     <input type="text" id="id_titulo" name="titulo" class="form-control" placeholder="Ingresa el título del evento" value="{{ publicacion.titulo }}" required />
@@ -21,7 +16,7 @@
                 <div class="mb-3">
                     <label for="id_imagen" class="form-label">Imagen</label>
                     <input type="file" id="id_imagen" name="imagen" class="form-control" readonly />
-                    <img class="img-fluid rounded" src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" style="max-width: 50%; height: auto; max-height: 150px;" />
+                    <img class="img-fluid rounded" src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" style="max-width: 50%; height: auto; max-height: 150px" />
                 </div>
                 <div class="mb-3">
                     <label for="id_contenido" class="form-label">Contenido</label>
@@ -37,11 +32,11 @@
                 {% if messages %}
                 <ul class="messages">
                     {% for message in messages %}
-                        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
                     {% endfor %}
                 </ul>
                 {% endif %}
-                </form>
+            </form>
             <div class="contenidoJ">
                 <button class="form-button btn btn-warning" onclick="window.location.href='{% url 'contenido' comunidad_id=publicacion.id %}'">Volver</button>
             </div>
