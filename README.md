@@ -54,4 +54,4 @@ Para un cambio de imagen:
 >credenciales por el momento son genericas: 
 > admin : admin
 
->como dato adicional, al ingresar como admin, se habilita un botono que accede a la tercera pre-entrega de Python, que se agrego para no borra la App, del proyecto principal.
+>Como dato adicional, al ingresar como admin, se habilita un boton que accede a la tercera pre-entrega de Python, que se agrego para no borra la App del proyecto principal.
