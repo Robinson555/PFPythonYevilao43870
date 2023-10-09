@@ -47,7 +47,17 @@
                                 </div>
                             </form>
                         </div>
-
+                        <!-- mensajes de error -->
+                        {% if messages %}
+                        <div class="alert alert-danger">
+                            <ul>
+                                {% for message in messages %}
+                                <li>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
+                        <!-- Fin del bloque de mensajes de error -->
                         <div>
                             <p class="mb-0">¿Quieres volver a la página de inicio? <a href="{% url 'inicioComunidad' %}" class="text-white-50 fw-bold">Ir a la página de inicio</a></p>
                         </div>

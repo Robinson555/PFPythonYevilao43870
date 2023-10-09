@@ -5,11 +5,22 @@
     <header class="mb-4">
         <!-- Post title -->
         <h1 class="fw-bolder mb-1">{{ publicacion.titulo }}</h1>
-        <br>
-        <br>
+        <br />
+        <!-- mensajes de error -->
+        {% if messages %}
+        <div class="alert alert-danger">
+            <ul>
+                {% for message in messages %}
+                <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        <!-- Fin del bloque de mensajes de error -->
+        <br />
         <a class="btn btn-outline-success btn-block" href="{% url 'contenidohome' %}"> Volver Atrás </a>
-        <br>
-        <br>
+        <br />
+        <br />
         {% if user.is_authenticated %} {% if es_autor %}
         <ul>
             <li>

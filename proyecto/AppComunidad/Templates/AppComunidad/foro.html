@@ -1,15 +1,26 @@
 {% extends "AppComunidad/padrecomunidad.html" %} {% load static %} {% block titulo %} Foro Publicado {% endblock %} {% block contenido_comunidad %}
 
 <article class="mb-4" style="margin: 20px">
+    <!-- mensajes de error -->
+    {% if messages %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <!-- Fin del bloque de mensajes de error -->
     <!-- Post header -->
     <header class="mb-4">
         <!-- Post title -->
         <h1 class="fw-bolder mb-1">{{ pregunta.titulo }}</h1>
-        <br>
-        <br>
+        <br />
+        <br />
         <a class="btn btn-outline-success btn-block" href="{% url 'forohome' %}"> Volver Atrás </a>
-        <br>
-        <br>
+        <br />
+        <br />
         {% if user.is_authenticated %} {% if es_autor %}
         <ul>
             <li>
@@ -101,4 +112,3 @@
     </div>
 </section>
 {% endblock %}
-

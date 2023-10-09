@@ -64,26 +64,24 @@ def registro(request):
 
 @login_required
 def editarusuario(request):
-    avatar=obtenerAvatar(request)
-    usuario=request.user
-    if request.method=="POST":
-        form=UserEditForm(request.POST)
+    avatar = obtenerAvatar(request)
+    usuario = request.user
+
+    if request.method == "POST":
+        form = UserEditForm(request.POST, instance=usuario)
+
         if form.is_valid():
-            info=form.cleaned_data
-            usuario.nombre=info["nombre"]
-            usuario.apellido=info["apellido"]
-            usuario.email=info["email"]
-            usuario.password1=info["password1"]
-            usuario.password2=info["password2"]
-            usuario.save()
-            messages.success(request, f'Cambios guardados exitosamente')
-            return redirect('homecomunidad')
+            form.save()
+            messages.success(request, 'Cambios guardados exitosamente')
+            return redirect('inicioComunidad')
         else:
-            messages.error(request, f"Error: Reintente, datos mal ingresados")
-            return redirect('editarusuario')
+            messages.error(request, 'Error: Reintente, datos mal ingresados')
+
     else:
-        form=UserEditForm(instance=usuario)
-        return render(request, "AppLogin/editarusuario.html", {"form": form, "nombreusuario":usuario.username, "avatar":obtenerAvatar(request)})
+        form = UserEditForm(instance=usuario)
+
+    return render(request, "AppLogin/editarusuario.html", {"form": form, "nombreusuario": usuario.username, "avatar":obtenerAvatar(request)})
+
 
 def seleccionarAvatar(request):
     if request.method == "POST":

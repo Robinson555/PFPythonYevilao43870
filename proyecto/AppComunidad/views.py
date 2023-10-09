@@ -18,6 +18,8 @@ def inicioComunidad(request):
     publicaciones = Comunidad.objects.all()
     preguntas = PreguntasCom.objects.all()
 
+    success_messages = messages.get_messages(request)
+
     return render(request,"AppComunidad/homecomunidad.html", {"publicaciones":publicaciones, "preguntas":preguntas, "avatar":obtenerAvatar(request)})
 
 @login_required
@@ -54,6 +56,8 @@ def contenido(request, comunidad_id):
                 comentario.respuesta_a = Comentario.objects.get(id=respuesta_a_id)
 
             comentario.save()
+            success_messages = messages.get_messages(request)
+
             return redirect('contenido', comunidad_id=comunidad_id)
     else:
         formulario = comentarioForm()
@@ -107,6 +111,8 @@ def foro(request, preguntas_id):
                 comentariop.respuesta_b = ComentarioPregunta.objects.get(id=respuesta_b_id)
 
             comentariop.save()
+            success_messages = messages.get_messages(request)
+
             return redirect('foro', preguntas_id=preguntas_id)
     else:
         formulario = comentarioPregunta()
@@ -132,7 +138,7 @@ def crear_seccion(request):
             seccion=form.save(commit=False)
             seccion.autor=request.user 
             seccion.save()
-            success_messages = messages.get_messages(request)
+            success_messages = (request, 'Publicación creada!')
             return redirect('contenido', comunidad_id=seccion.id)
     else:
         form = crearBlogForm()
