@@ -23,7 +23,7 @@ class comentarioForm(forms.ModelForm):
         fields = ['contenido']
 
 class comentarioPregunta(forms.ModelForm):
-    respuesta_a = forms.IntegerField(widget=forms.HiddenInput, required=False)
+    respuesta_b = forms.IntegerField(widget=forms.HiddenInput, required=False)
 
     class Meta:
         model = ComentarioPregunta 

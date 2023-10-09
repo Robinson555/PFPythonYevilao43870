@@ -29,38 +29,38 @@ def aboutMe(request):
 
 
 #Sección del Blog
-
-@login_required
 def contenido(request, comunidad_id):
-    avatar=obtenerAvatar(request)
+    avatar = obtenerAvatar(request)
     publicacion = get_object_or_404(Comunidad, id=comunidad_id)
-    comentarios = Comentario.objects.filter(publicacion=publicacion)
-    
+    comentarios_principales = Comentario.objects.filter(publicacion=publicacion, respuesta_a=None)
+
     es_autor = publicacion.autor == request.user
-    
+
     if request.method == 'POST':
         formulario = comentarioForm(request.POST)
         if formulario.is_valid():
             comentario = formulario.save(commit=False)
             comentario.autor = request.user
             comentario.publicacion = publicacion
-            
+
             try:
                 avatar_usuario = Avatar.objects.get(user=request.user)
                 comentario.avatar = avatar_usuario.imagen
             except Avatar.DoesNotExist:
                 comentario.avatar = None
-            
+
             respuesta_a_id = request.POST.get('respuesta_a')
             if respuesta_a_id:
-                comentario.respuesta_a_id = respuesta_a_id
-            
+                comentario.respuesta_a = Comentario.objects.get(id=respuesta_a_id)
+
             comentario.save()
             return redirect('contenido', comunidad_id=comunidad_id)
     else:
         formulario = comentarioForm()
 
-    return render(request, "AppComunidad/contenido.html", {'publicacion': publicacion, 'comentarios': comentarios, 'formulario': formulario, 'es_autor': es_autor, 'avatar':obtenerAvatar(request)})
+    return render(request, "AppComunidad/contenido.html", {'publicacion': publicacion, 'comentarios_principales': comentarios_principales, 'formulario': formulario, 'es_autor': es_autor, 'avatar': obtenerAvatar(request)})
+
+
 
 @login_required
 def contenidoHome(request):
@@ -80,37 +80,39 @@ def foroHome(request):
 
     return render(request, "AppComunidad/forohome.html", {'preguntas': preguntas, 'avatar':obtenerAvatar(request)})
 
+
 @login_required
 def foro(request, preguntas_id):
     avatar = obtenerAvatar(request)
     pregunta = get_object_or_404(PreguntasCom, id=preguntas_id)
-    comentariosp = ComentarioPregunta.objects.filter(publicacion=pregunta, respuesta_a=None)  # Obtener comentarios principales sin respuesta_a
+    comentariosp = ComentarioPregunta.objects.filter(publicacion=pregunta, respuesta_b=None)
 
     es_autor = pregunta.autor == request.user
 
     if request.method == 'POST':
         formulario = comentarioPregunta(request.POST)
         if formulario.is_valid():
-            comentario = formulario.save(commit=False)
-            comentario.autor = request.user
-            comentario.publicacion = pregunta
+            comentariop = formulario.save(commit=False)
+            comentariop.autor = request.user
+            comentariop.publicacion = pregunta
 
             try:
                 avatar_usuario = Avatar.objects.get(user=request.user)
-                comentario.avatar = avatar_usuario.imagen
+                comentariop.avatar = avatar_usuario.imagen
             except Avatar.DoesNotExist:
-                comentario.avatar = None
+                comentariop.avatar = None
 
-            respuesta_a_id = request.POST.get('respuesta_a')
-            if respuesta_a_id:
-                comentario.respuesta_a = ComentarioPregunta.objects.get(id=respuesta_a_id)
+            respuesta_b_id = request.POST.get('respuesta_b')
+            if respuesta_b_id:
+                comentariop.respuesta_b = ComentarioPregunta.objects.get(id=respuesta_b_id)
 
-            comentario.save()
+            comentariop.save()
             return redirect('foro', preguntas_id=preguntas_id)
     else:
         formulario = comentarioPregunta()
 
     return render(request, "AppComunidad/foro.html", {'pregunta': pregunta, 'comentariosp': comentariosp, 'formulario': formulario, 'es_autor': es_autor, 'avatar': avatar})
+
 
 #Pagina en proceso de creación
 @login_required

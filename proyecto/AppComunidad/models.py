@@ -30,7 +30,7 @@ class Comentario(models.Model):
     contenido = models.TextField()
     fecha = models.DateTimeField(auto_now_add=True)
     avatar = models.ImageField(upload_to='media/avatars/', blank=True, null=True)
-    respuesta_a = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    respuesta_a = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='respuestas')
 
     def __str__(self):
         return f'Comentario por {self.autor} en {self.publicacion.titulo}'
@@ -41,10 +41,10 @@ class Comentario(models.Model):
 class ComentarioPregunta(models.Model):
     autor = models.ForeignKey(User, on_delete=models.CASCADE)
     publicacion = models.ForeignKey(PreguntasCom, on_delete=models.CASCADE)
-    contenidop = models.TextField()
+    contenidop = models.TextField(blank=True) 
     fecha = models.DateTimeField(auto_now_add=True)
     avatar = models.ImageField(upload_to='media/avatars/', blank=True, null=True)
-    respuesta_a = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    respuesta_b = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Comentario por {self.autor} en {self.publicacion.titulo}'

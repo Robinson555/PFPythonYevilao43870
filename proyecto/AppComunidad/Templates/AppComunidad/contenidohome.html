@@ -16,11 +16,11 @@
         {% for publicacion in publicaciones %}
         <div class="col-md-4">
             <!-- Blog post-->
-            <div class="card mb-4">
+            <div class="card mb-4 shadow border-0">
                 <a href="{% url 'contenido' comunidad_id=publicacion.id %}">
                     <img class="card-img-top max-width-100 max-height-100" src="{{ publicacion.imagen.url }}" alt="{{ publicacion.titulo }}" style="max-width: 376px; max-height: 320px;" />
                 </a>
-                <div class="card-body">
+                <div class="card-body shadow border-0">
                     <div class="small text-muted">{{ publicacion.fecha_publicacion|date:"F d, Y" }}</div>
                     <h2 class="card-title h4">{{ publicacion.titulo }}</h2>
                     <p class="card-text">{{ publicacion.contenido|slice:":100" }}</p>

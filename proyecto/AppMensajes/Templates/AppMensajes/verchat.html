@@ -5,11 +5,14 @@
 {% block titulo %} Detalle del Mensaje {% endblock %} 
 
 {% block contenido_comunidad %}
+
 <style>
     .formulario-container {
+        width: 600px;
+        flex-wrap: wrap;
         border-radius: 2rem;
         background-color: #837171; 
-        padding: 20px;
+        padding: 30px;
         margin: 0 auto;
     }
 </style>
@@ -17,7 +20,7 @@
 <div class="formulario-container">
     <form method="post">
         {% csrf_token %}
-        <div class="col-8 justify-content-start">
+        <div class="col-40 justify-content-start">
             <p>ID del mensaje: {{ vm.id }}</p>
             <div class="form-group">
                 <label for="fecha">Fecha:</label>

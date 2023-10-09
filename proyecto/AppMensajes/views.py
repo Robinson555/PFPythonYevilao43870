@@ -35,13 +35,6 @@ def vista_chat(request):
 
 
 @login_required
-def vmsm(request, id):
-    avatar = obtenerAvatar(request)
-    mensaje = get_object_or_404(Mensaje, pk=id)
-    return render(request, 'AppMensajes/verchat.html', {'mensaje': mensaje, 'mensajes_recibidos':mensajes_recibidos, 'avatar': obtenerAvatar(request)})
-
-
-@login_required
 def visualm(request, id):
     avatar = obtenerAvatar(request)
     vm = Mensaje.objects.get(id=id)

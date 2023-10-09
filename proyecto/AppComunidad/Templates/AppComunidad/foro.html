@@ -5,7 +5,11 @@
     <header class="mb-4">
         <!-- Post title -->
         <h1 class="fw-bolder mb-1">{{ pregunta.titulo }}</h1>
-
+        <br>
+        <br>
+        <a class="btn btn-outline-success btn-block" href="{% url 'forohome' %}"> Volver Atrás </a>
+        <br>
+        <br>
         {% if user.is_authenticated %} {% if es_autor %}
         <ul>
             <li>
@@ -36,57 +40,64 @@
         margin-top: 20px;
     }
 </style>
-<!-- Comment section -->
-<!-- Comment section -->
 <section class="mb-5" style="width: 70%">
     <div class="card bg-light">
         <div class="card-body">
             {% for comentario_principal in comentariosp %}
             <!-- Comentario principal -->
+            {% if formulario.errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for error in formulario.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
             <div class="d-flex mb-4">
                 <div class="flex-shrink-0">
-                    {% if comentario.avatar %}
-                    <img class="rounded-circle" src="{{ comentario.avatar.url }}" alt="Avatar de usuario" style="width: 30px" />
+                    {% if comentario_principal.avatar %}
+                    <img class="rounded-circle" src="{{ comentario_principal.avatar.url }}" alt="Avatar de usuario" style="width: 30px" />
                     {% else %}
                     <!-- Puedes mostrar un avatar predeterminado aquí si lo deseas -->
                     <img class="rounded-circle" src="{% static 'avatars/avatar-predeterminado.png' %}" alt="Avatar de usuario predeterminado" />
                     {% endif %}
                 </div>
                 <div class="ms-3">
-                    <div class="fw-bold">{{ comentario.autor.username }}</div>
-                    {{ comentario.contenidop }}
-                    <small class="text-muted">Publicado el {{ comentario.fecha }}</small>
+                    <div class="fw-bold">{{ comentario_principal.autor.username }}</div>
+                    {{ comentario_principal.contenidop }}
+                    <small class="text-muted">Publicado el {{ comentario_principal.fecha }}</small>
                 </div>
             </div>
+
             <!-- Respuestas anidadas -->
-            {% for respuesta in comentario.comentariopregunta_set.all %} {% if comentario.respuesta_a_id == comentario.id %}
+            {% for respuesta in comentario_principal.comentariopregunta_set.all %}
             <div class="d-flex mb-4 ms-5 mt-4">
                 <div class="flex-shrink-0">
-                    {% if comentario.avatar %}
-                    <img class="rounded-circle" src="{{ comentario.avatar.url }}" alt="Avatar de usuario" style="width: 20px" />
+                    {% if respuesta.avatar %}
+                    <img class="rounded-circle" src="{{ respuesta.avatar.url }}" alt="Avatar de usuario" style="width: 20px" />
                     {% else %}
                     <!-- Intento de avatar predeterminado -->
                     <img class="rounded-circle" src="{% static 'avatars/avatar-predeterminado.png' %}" alt="Avatar de usuario predeterminado" />
                     {% endif %}
                 </div>
                 <div class="ms-3">
-                    <div class="fw-bold">{{ comentario.autor.username }}</div>
-                    {{ comentario.contenido }}
+                    <div class="fw-bold">{{ respuesta.autor.username }}</div>
+                    {{ respuesta.contenidop }}
                     <small class="text-muted">Publicado el {{ respuesta.fecha }}</small>
                 </div>
             </div>
-            {% endif %} {% endfor %}
+            {% endfor %}
 
             <!-- Formulario de respuesta -->
             <form class="mb-4 ms-5 mt-4 text-md" method="POST">
                 {% csrf_token %}
-                <textarea class="form-control text-md" style="width: 50%" name="contenido" rows="3" placeholder="Responder a este comentario"></textarea>
-                <input type="hidden" class="text-md" name="respuesta_a" value="{{ comentario_principal.id }}" />
+                <textarea class="form-control text-md" style="width: 50%" name="contenidop" rows="3" placeholder="Responder a este comentario"></textarea>
+                <input type="hidden" class="text-md" name="respuesta_b" value="{{ comentario_principal.id }}" />
                 <button type="submit" class="btn btn-info text-md">Publicar respuesta</button>
             </form>
             {% endfor %}
         </div>
     </div>
 </section>
-
 {% endblock %}

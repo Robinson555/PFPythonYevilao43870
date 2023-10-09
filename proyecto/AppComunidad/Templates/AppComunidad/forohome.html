@@ -11,23 +11,23 @@
 <h1>Sección Foro Preguntas y Tips</h1>
 <h3><a href="{% url 'crearforo' %}" class="btn btn-success">Crear publicación de Foro</a></h3>
 
-<div class="row mt-5">
-    {% for pregunta in preguntas %}
-    <div class="col-lg-6">
-        <!-- Foro post -->
-        <div class="card mb-4">
-            <a href="{% url 'foro' preguntas_id=pregunta.id %}">
-                <img class="card-img-top" src="{{ pregunta.imagen.url }}" alt="{{ pregunta.titulo }}" />
-            </a>
-            <div class="card-body">
-                <div class="small text-muted">{{ pregunta.fecha_creacion|date:"F d, Y" }}</div>
-                <h2 class="card-title h4">{{ pregunta.titulo }}</h2>
-                <p class="card-text">{{ pregunta.contenido|slice:":100" }}</p>
-                <a class="btn btn-primary" href="{% url 'foro' preguntas_id=pregunta.id %}">Leer más →</a>
+<div class="container mt-5">
+    <div class="row">
+        {% for pregunta in preguntas %}
+        <div class="col-md-4">
+            <!-- Foro post -->
+            <div class="card mb-4 shadow border-0">
+                <a href="{% url 'foro' preguntas_id=pregunta.id %}">
+                    <img class="card-img-top max-width-100 max-height-100"  src="{{ pregunta.imagen.url }}" alt="{{ pregunta.titulo }}" />
+                </a>
+                <div class="card-body shadow border-0">
+                    <div class="small text-muted">{{ pregunta.fecha_creacion|date:"F d, Y" }}</div>
+                    <h2 class="card-title h4">{{ pregunta.titulo }}</h2>
+                    <p class="card-text">{{ pregunta.contenido|slice:":100" }}</p>
+                    <a class="btn btn-primary" href="{% url 'foro' preguntas_id=pregunta.id %}">Leer más →</a>
+                </div>
             </div>
         </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-</div>
-
 {% endblock %}

@@ -626,39 +626,33 @@ progress {
   content: "— ";
 }
 
-/* Estilo para los enlaces en la tabla */
+
 .table-link {
-  color: #007bff; /* Color del enlace */
-  text-decoration: none; /* Quitar subrayado del enlace */
-  font-weight: bold; /* Hacer el texto en negrita */
+  color: #007bff; 
+  text-decoration: none; 
+  font-weight: bold; 
 }
 
-/* Estilo para las celdas de la tabla */
+
 .table {
-  width: 100%; /* Ocupar todo el ancho disponible */
-  border-collapse: collapse; /* Colapsar bordes de la tabla */
+  width: 100%;
+  border-collapse: collapse; 
 }
 
 .table, th, td {
-  border: 1px solid #ddd; /* Borde delgado en celdas */
+  border: 1px solid #ddd; 
 }
 
 .th, .td {
-  padding: 8px; /* Espaciado interior en celdas */
-  text-align: left; /* Alineación de texto a la izquierda */
-}
-
-/* Estilo para las esquinas redondeadas */
-.td:first-child {.
-  border-top-left-radius: 10px;
-  border-bottom-left-radius: 10px;
+  padding: 8px; 
+  text-align: left; 
 }
 
 .td:last-child {
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
-.
+
 .img-fluid {
   max-width: 100%;
   height: auto;
@@ -691,19 +685,19 @@ progress {
 }
 
 .gradient-custom {
-  /* Fallback for old browsers */
+
   background: #6a11cb;
 
-  /* Chrome 10-25, Safari 5.1-6 */
+
   background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
 
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
 }
 
 .avatar-img {
-  max-width: 100px; /* Establece el ancho máximo deseado */
-  max-height: 100px; /* Establece la altura máxima deseada */
+  max-width: 100px;
+  max-height: 100px; 
 }
 
 
@@ -4244,6 +4238,12 @@ textarea.form-control-lg {
   margin-left: calc(-0.5 * var(--bs-card-cap-padding-x));
 }
 
+.all-mv-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .card-img-overlay {
   position: absolute;
   top: 0;
@@ -4257,11 +4257,13 @@ textarea.form-control-lg {
   margin-bottom: 3rem !important;
 }
 
-@media (min-width: 992px)
-.col-lg-4 {
-  flex: 0 0 auto;
-  width: 33.33333333%;
+@media (min-width: 992px){
+  .col-lg-4 {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+  }
 }
+
 
 
 .card-img,

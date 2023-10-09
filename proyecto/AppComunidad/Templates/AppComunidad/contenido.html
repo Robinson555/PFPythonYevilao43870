@@ -5,7 +5,11 @@
     <header class="mb-4">
         <!-- Post title -->
         <h1 class="fw-bolder mb-1">{{ publicacion.titulo }}</h1>
-
+        <br>
+        <br>
+        <a class="btn btn-outline-success btn-block" href="{% url 'contenidohome' %}"> Volver Atrás </a>
+        <br>
+        <br>
         {% if user.is_authenticated %} {% if es_autor %}
         <ul>
             <li>
@@ -44,26 +48,26 @@
 <section class="mb-5" style="width: 70%">
     <div class="card bg-light">
         <div class="card-body">
-            {% for comentario in comentarios %}
+            {% for comentario_principal in comentarios_principales %}
             <!-- Comentario principal -->
             <div class="d-flex mb-4">
                 <div class="flex-shrink-0">
-                    {% if comentario.avatar %}
-                    <img class="rounded-circle" src="{{ comentario.avatar.url }}" alt="Avatar de usuario" style="width: 30px" />
+                    {% if comentario_principal.avatar %}
+                    <img class="rounded-circle" src="{{ comentario_principal.avatar.url }}" alt="Avatar de usuario" style="width: 30px" />
                     {% else %}
                     <!-- Puedes mostrar un avatar predeterminado aquí si lo deseas -->
                     <img class="rounded-circle" src="{% static 'avatars/avatar-predeterminado.png' %}" alt="Avatar de usuario predeterminado" />
                     {% endif %}
                 </div>
                 <div class="ms-3">
-                    <div class="fw-bold">{{ comentario.autor.username }}</div>
-                    {{ comentario.contenido }}
-                    <small class="text-muted">Publicado el {{ comentario.fecha }}</small>
+                    <div class="fw-bold">{{ comentario_principal.autor.username }}</div>
+                    {{ comentario_principal.contenido }}
+                    <small class="text-muted">Publicado el {{ comentario_principal.fecha }}</small>
                 </div>
             </div>
 
             <!-- Respuestas anidadas -->
-            {% for comentario in comentarios %} {% if comentario.comentario_a_id == comentario.id %}
+            {% for respuesta in comentario_principal.respuestas.all %}
             <div class="d-flex mb-4 ms-5 mt-4">
                 <div class="flex-shrink-0">
                     {% if respuesta.avatar %}
@@ -75,20 +79,19 @@
                 </div>
                 <div class="ms-3">
                     <div class="fw-bold">{{ respuesta.autor.username }}</div>
-                    {{ comentario.contenido }}
-                    <small class="text-muted">Publicado el {{ contenido.fecha }}</small>
+                    {{ respuesta.contenido }}
+                    <small class="text-muted">Publicado el {{ respuesta.fecha }}</small>
                 </div>
             </div>
-            {% endif %} {% endfor %}
+            {% endfor %}
 
             <!-- Formulario de respuesta -->
             <form class="mb-4 ms-5 mt-4 text-md" method="POST">
                 {% csrf_token %}
                 <textarea class="form-control text-md" style="width: 50%" name="contenido" rows="3" placeholder="Responder a este comentario"></textarea>
-                <input type="hidden" class="text-md" name="respuesta_a" value="{{ comentario.id }}" />
+                <input type="hidden" class="text-md" name="respuesta_a" value="{{ comentario_principal.id }}" />
                 <button type="submit" class="btn btn-info text-md">Publicar respuesta</button>
             </form>
-
             {% endfor %}
         </div>
     </div>

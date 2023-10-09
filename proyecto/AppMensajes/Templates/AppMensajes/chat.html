@@ -1,16 +1,8 @@
-{% extends "AppComunidad/padrecomunidad.html" %} 
-
-{% load static %} 
-
-{% block titulo %} Plataforma MSM Usuarios {% endblock titulo %} 
-
-{% block contenido_comunidad %}
-<main style="margin-left: 20px;">
-
+{% extends "AppComunidad/padrecomunidad.html" %} {% load static %} {% block titulo %} Plataforma MSM Usuarios {% endblock titulo %} {% block contenido_comunidad %}
+<main style="margin-left: 20px">
     <section>
         <h2>Mensajería Blog</h2>
-    
-        <div id="new-vm-container" style="background-color: #f8f9fa; border-radius: 1rem; padding: 10px; width: 60%;">
+        <div id="new-vm-container" style="background-color: #f8f9fa; border-radius: 1rem; padding: 10px; width: 60%">
             <form id="vm-form" action="{% url 'chat' %}" method="POST">
                 {% csrf_token %}
                 <div style="display: flex; flex-direction: column; align-items: center">
@@ -19,57 +11,56 @@
                         <option value="{{ usuario.id }}">{{ usuario.username }}</option>
                         {% endfor %}
                     </select>
-                    <textarea class="form-control mb-2" id="textAreaExample2" rows="4" style="resize: none"></textarea>
+                    <textarea class="form-control mb-2" id="textAreaExample2" rows="4" name="envio" style="resize: none"></textarea>
                     <button type="submit" class="btn btn-primary btn-sm" style="border-radius: 1rem">Enviar Mensaje</button>
                 </div>
             </form>
             <p style="margin-top: 10px">{{ mensaje }}</p>
         </div>
-    
-        <div id="all-mv-container" style="width: 60%;">
+        <div id="all-mv-container" style="width: 60%">
             {% if mensajes_recibidos %}
-            <table class="table table-success table-striped" >
+            <table class="table table-success table-striped">
                 <thead>
-                    <H3> Mensajes Recibidos </H3>
+                    <h3>Mensajes Recibidos</h3>
                     <tr>
                         <th scope="col">De</th>
                         <th scope="col">Mensaje</th>
                         <th scope="col">Fecha</th>
                     </tr>
                 </thead>
-                <tbody style="border-radius: 1rem"> 
+                <tbody style="border-radius: 1rem">
                     {% for vm in mensajes_recibidos %}
                     <tr style="border-radius: 1rem">
-                        <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.enviado }}</a></td>
-                        <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.contenido }}</a></td>
+                        <td><a href="{% url 'vmensaje' vm.id %}" width="60px" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.enviado }}</a></td>
+                        <td><a href="{% url 'vmensaje' vm.id %}" width="200px" style="color: #007bff; font-weight: bold; text-decoration: none" class="mensaje-limitado">{{ vm.contenido }}</a></td>
                         <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.fechaenvio }}</a></td>
                     </tr>
                     <style>
                         /* Estilo para la tabla */
                         table {
-                            width: 100%; /* Ocupar todo el ancho disponible */
-                            border-collapse: collapse; /* Colapsar bordes de la tabla */
+                            width: 100%;
+                            border-collapse: collapse;
                         }
-    
+
                         /* Estilo para las celdas de la tabla */
                         table,
                         th,
                         td {
-                            border: 1px solid #ddd; /* Borde delgado en celdas */
+                            border: 1px solid #ddd;
                         }
-    
+
                         th,
                         td {
-                            padding: 8px; /* Espaciado interior en celdas */
-                            text-align: left; /* Alineación de texto a la izquierda */
+                            padding: 8px;
+                            text-align: left;
                         }
-    
+
                         /* Estilo para las esquinas redondeadas */
                         td:first-child {
                             border-top-left-radius: 10px;
                             border-bottom-left-radius: 10px;
                         }
-    
+
                         td:last-child {
                             border-top-right-radius: 10px;
                             border-bottom-right-radius: 10px;
@@ -83,68 +74,70 @@
             {% endif %}
         </div>
     </section>
-    <br>
-    <br>
+    <br />
+    <br />
     <section>
-        <section>    
-            <div id="all-mv-container" style="width: 60%; border-radius: 4rem;">
-                {% if mensajes_enviados %}
-                <table class="table table-success table-striped">
-                    <thead>
-                        <H3> Mensajes Enviados </H3>
-                        <tr>
-                            <th scope="col">Para</th>
-                            <th scope="col">Mensaje</th>
-                            <th scope="col">Fecha</th>
-                        </tr>
-                    </thead>
-                    <tbody style="width: 70%; border-radius: 4rem;">
-                        {% for vm in mensajes_enviados %}
-                        <tr>
-                            <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.recibido }}</a></td>
-                            <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.contenido }}</a></td>
-                            <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.fechaenvio }}</a></td>
-                        </tr>
-                        <style>
-                            /* Estilo para la tabla */
-                            table {
-                                width: 100%; /* Ocupar todo el ancho disponible */
-                                border-collapse: collapse; /* Colapsar bordes de la tabla */
-                            }
-        
-                            /* Estilo para las celdas de la tabla */
-                            table,
-                            th,
-                            td {
-                                border: 1px solid #ddd; /* Borde delgado en celdas */
-                            }
-        
-                            th,
-                            td {
-                                padding: 8px; /* Espaciado interior en celdas */
-                                text-align: left; /* Alineación de texto a la izquierda */
-                            }
-        
-                            /* Estilo para las esquinas redondeadas */
-                            td:first-child {
-                                border-top-left-radius: 10px;
-                                border-bottom-left-radius: 10px;
-                            }
-        
-                            td:last-child {
-                                border-top-right-radius: 10px;
-                                border-bottom-right-radius: 10px;
-                            }
-                        </style>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                {% else %}
-                <p>No tienes mensajes enviados.</p>
-                {% endif %}
-            </div>
-        </section>
-        
+        <div id="all-mv-container" style="width: 60%; border-radius: 4rem">
+            {% if mensajes_enviados %}
+            <table class="table table-success table-striped">
+                <thead>
+                    <h3>Mensajes Enviados</h3>
+                    <tr>
+                        <th scope="col">Para</th>
+                        <th scope="col">Mensaje</th>
+                        <th scope="col">Fecha</th>
+                    </tr>
+                </thead>
+                <tbody style="width: 70%; border-radius: 4rem">
+                    {% for vm in mensajes_enviados %}
+                    <tr>
+                        <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.recibido }}</a></td>
+                        <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none" class="mensaje-limitado">{{ vm.contenido }}</a></td>
+                        <td><a href="{% url 'vmensaje' vm.id %}" style="color: #007bff; font-weight: bold; text-decoration: none">{{ vm.fechaenvio }}</a></td>
+                    </tr>
+                    <style>
+                        /* Estilo para la tabla */
+                        table {
+                            width: 100%;
+                            border-collapse: collapse;
+                        }
+
+                        .mensaje-limitado {
+                            width: 300px;
+                            word-wrap: break-word;
+                        }
+
+                        /* Estilo para las celdas de la tabla */
+                        table,
+                        th,
+                        td {
+                            border: 1px solid #ddd;
+                        }
+
+                        th,
+                        td {
+                            padding: 8px;
+                            text-align: left;
+                        }
+
+                        /* Estilo para las esquinas redondeadas */
+                        td:first-child {
+                            border-top-left-radius: 10px;
+                            border-bottom-left-radius: 10px;
+                        }
+
+                        td:last-child {
+                            border-top-right-radius: 10px;
+                            border-bottom-right-radius: 10px;
+                        }
+                    </style>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No tienes mensajes enviados.</p>
+            {% endif %}
+        </div>
     </section>
 </main>
 
