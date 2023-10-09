@@ -8,7 +8,10 @@ from .forms import PerrosForm, GatosForm, Fecha_IngresoForm, ClienteForm
 
 #Inicio de Pagina
 def inicio(request):
-    return render(request, "AppProyecto/inicio.html")
+    user = request.user
+    
+    return render(request, 'AppProyecto/inicio.html', {'user': user})
+
 
 #SECCION DE BUSQUEDA DE CLIENTE VETERINARIA
 

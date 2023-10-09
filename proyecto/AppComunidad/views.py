@@ -12,6 +12,7 @@ from .forms import crearBlogForm, crearForoForm, comentarioForm, comentarioPregu
 from .models import Comunidad, PreguntasCom, Comentario, ComentarioPregunta
 
 # Create your views here.
+
 @login_required
 def inicioComunidad(request):
     avatar= obtenerAvatar(request)
@@ -62,7 +63,6 @@ def contenido(request, comunidad_id):
         formulario = comentarioForm()
 
     return render(request, "AppComunidad/contenido.html", {'publicacion': publicacion, 'comentarios_principales': comentarios_principales, 'formulario': formulario, 'es_autor': es_autor, 'avatar': obtenerAvatar(request)})
-
 
 
 @login_required

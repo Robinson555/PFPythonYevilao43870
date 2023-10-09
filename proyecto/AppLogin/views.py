@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
+from django.conf import settings
 from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.http import HttpResponseForbidden
@@ -14,14 +15,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 def obtenerAvatar(request):
+    avatares = Avatar.objects.filter(user=request.user.id)
 
-    avatares=Avatar.objects.filter(user=request.user.id)
-    
-    if len(avatares)!=0:
-        
+    if len(avatares) != 0:
         return avatares[0].imagen.url
     else:
-        return "/media/avatars/avatarpordefecto.png"
+        return f"{settings.MEDIA_URL}avatars/avatarpordefecto.png"
+
 
 def loginUsuario(request):
     if request.method == "POST":

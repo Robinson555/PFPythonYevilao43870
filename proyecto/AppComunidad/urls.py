@@ -2,6 +2,8 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+        #
+        #
         #Página General del Blog
         path('homecomunidad/', inicioComunidad, name="inicioComunidad"),
         #

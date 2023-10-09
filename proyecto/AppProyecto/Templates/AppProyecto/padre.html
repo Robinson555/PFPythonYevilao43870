@@ -22,7 +22,7 @@
         <!-- Navigation-->
         <nav class="navbar navbar-light bg-light static-top">
             <div class="container">
-                <a href="{% url 'inicio' %}"></a>
+                <a href="{% url 'iniciovet' %}"></a>
                 <a class="navbar-brand" href="http://127.0.0.1:8000/admin">
                     <img src="{% static 'AppProyecto/assets/img/logohome.png' %}" alt="Ir al Panel de Administración" width="70rem" height="auto">
                 </a>
@@ -31,6 +31,7 @@
                 <a class="btn btn-info" href="{% url 'gatos' %}">Gato</a>
                 <a class="btn btn-info" href="{% url 'fechaIngreso' %}">Fecha Ingreso</a>
                 <a class="btn btn-info" href="{% url 'clientes' %}">Clientes</a>
+                <a class="btn btn-success btn-block" href="{% url 'inicioComunidad' %}"> Volver a Comunidad Austral</a>
             </div>
         </nav>
         <!-- Masthead-->
