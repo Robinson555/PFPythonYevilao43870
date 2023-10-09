@@ -3,8 +3,8 @@ README
 =============
 
 # Instructivo de uso
- Si prefieres, también puedes hacer clic en el [Video](https://youtube "Youtube") donde se explica de forma más fluido los procesos de uso.
-
+  Si prefieres, también puedes hacer clic en el [Video](https://youtu.be/RJjJyy93cks) donde se explica de forma más fluido los procesos de uso.
+  
 -------------
 ###Proyecto Final Python #43870 - Robinson Yevilao
 -------------
