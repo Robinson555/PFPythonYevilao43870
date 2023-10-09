@@ -56,7 +56,6 @@ def contenido(request, comunidad_id):
                 comentario.respuesta_a = Comentario.objects.get(id=respuesta_a_id)
 
             comentario.save()
-            success_messages = messages.get_messages(request)
 
             return redirect('contenido', comunidad_id=comunidad_id)
     else:
@@ -111,7 +110,6 @@ def foro(request, preguntas_id):
                 comentariop.respuesta_b = ComentarioPregunta.objects.get(id=respuesta_b_id)
 
             comentariop.save()
-            success_messages = messages.get_messages(request)
 
             return redirect('foro', preguntas_id=preguntas_id)
     else:
