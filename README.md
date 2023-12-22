@@ -6,13 +6,13 @@ README
   Si prefieres, también puedes hacer clic en el [Video](https://youtu.be/RJjJyy93cks) donde se explica de forma más fluido los procesos de uso.
   
 -------------
-###Proyecto Final Python #43870 - Robinson Yevilao
+### Proyecto Final Python #43870 - Robinson Yevilao
 -------------
-######Página orientada a la interacción de los usuarios entre sí y como método de información.
+###### Página orientada a la interacción de los usuarios entre sí y como método de información.
 
 -------------
 
-###Inicia sesión con tus credenciales.
+### Inicia sesión con tus credenciales.
 
 - Para usar y ver el contenido de la página, primero verifica los requisitos y conoce lo que necesitas tener instalado para poder iniciar el proyecto.
 
@@ -36,14 +36,14 @@ README
 - Sección de logout para cerrar sesión.
 
 
-####Sección de Usuarios
+#### Sección de Usuarios
 > La sección de usuarios está disponible para editar tu información de perfil.
 
 Para un cambio de imagen:
 > Para cambiar tu avatar, también está disponible en la sección de "Editar Perfil", además de que se puede cambiar la contraseña de usuario.
 
 
-**Acceso al Administrador de la Página Django**
+** Acceso al Administrador de la Página Django **
 
  - Si requieres acceso al administrador de la página Django, debes acceder a la dirección:  
  > "Django Administration", [Enlace](http://127.0.0.1:8000/admin/login/?next=/admin/).
